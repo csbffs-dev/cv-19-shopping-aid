@@ -12,7 +12,10 @@ import { AppRoutingModule } from './app-routing.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot({
+    scrollPadding: false,
+    scrollAssist: false
+  }), AppRoutingModule],
   providers: [
     StatusBar,
     SplashScreen,

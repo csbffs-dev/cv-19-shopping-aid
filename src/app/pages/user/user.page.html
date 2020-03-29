@@ -1,0 +1,27 @@
+<div #elseBlock class="status-bar-gap">
+  <form (ngSubmit)="submitSignUp()">
+    <ion-toolbar color="secondary">
+      <ion-buttons slot="primary">
+        <ion-button type="submit">
+          save
+        </ion-button>
+      </ion-buttons>
+      <ion-title>Set Profile</ion-title>
+    </ion-toolbar>
+    <ion-content [fullscreen]="true">
+      <ion-item>
+        <ion-label>First Name</ion-label><br>
+        <ion-input type="text" [(ngModel)]="user.firstName" name="firstname"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Last Name</ion-label><br>
+        <ion-input type="text" [(ngModel)]="user.lastName" name="lastname"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Zipcode</ion-label><br>
+        <ion-input type="number" [(ngModel)]="user.zipCode" name="zipcode"></ion-input>
+      </ion-item>
+    
+    </ion-content>
+  </form>
+</div>
