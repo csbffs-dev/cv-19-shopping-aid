@@ -1,0 +1,7 @@
+{
+  "name": "cv-19-shopping-aid",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
