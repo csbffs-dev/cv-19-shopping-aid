@@ -3,10 +3,10 @@ export class User {
     private _lastName: string;
     private _zipCode: number;
     
-    constructor(){
-        this._firstName = undefined;
-        this._lastName = undefined;
-        this._zipCode = undefined;
+    constructor(firstName?: string, lastName?: string, zipCode?: number){
+        this._firstName = firstName;
+        this._lastName = lastName;
+        this._zipCode = zipCode;
     }
 
     get firstName() {
@@ -35,5 +35,9 @@ export class User {
 
     get fullName() {
         return this._firstName + ' ' + this._lastName;
+    }
+
+    isDefined(): boolean {
+        return this._firstName != undefined && this._lastName != undefined && this._zipCode != undefined;
     }
  }

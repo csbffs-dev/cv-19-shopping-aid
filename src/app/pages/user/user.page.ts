@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
+import { Router } from '@angular/router';
+import { Plugins } from '@capacitor/core';
+
+const { Storage } = Plugins;
 
 @Component({
   selector: 'app-user',
@@ -9,16 +13,23 @@ import { User } from 'src/app/models/user';
 export class UserPage implements OnInit {
   public user: User;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.user = new User();
   }
 
   public submitSignUp() {
-    console.log('save user');
-    console.log('Full name: ' + this.user.fullName);
-    console.log('Zipcode: ' + this.user.zipCode);
+    Storage.set({
+      key: 'user',
+      value: JSON.stringify({
+        'firstName': this.user.firstName,
+        'lastName': this.user.lastName,
+        'zipCode': this.user.zipCode
+      })
+    });
+    console.log(Storage.get({ key: 'user'}));
+    this.router.navigate(['/home']);
   }
 
 }
