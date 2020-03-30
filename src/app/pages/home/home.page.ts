@@ -25,14 +25,13 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(Storage.keys.length);
-    this.navEnd.subscribe(evt => {
-      console.log('Navigation Ended!');
-      this.setUser()
-    });
-    Storage.keys().then(key => {
-      if(key.keys.indexOf('user') > -1){
-        this.setUser();
+    // this.navEnd.subscribe(evt => {
+    //   console.log('Navigation Ended!');
+    //   this.setUser()
+    // });
+    Storage.get({key: 'user'}).then(val => {
+      if(val.value){
+        this.setUser(val.value);
       } else {
         console.log('First login.  Redirecting to user page');
         this.router.navigate(['/user']);
@@ -40,11 +39,9 @@ export class HomePage implements OnInit {
     });
   }
 
-  setUser(): void  {
-    Storage.get({key: 'user'}).then(val => {
-      const userData = JSON.parse(val.value);
-      this.user = new User(userData.firstName, userData.lastName, userData.zipCode);
-      console.log(this.user);
-    });
+  setUser(userValue): void  {
+    const userData = JSON.parse(userValue);
+    this.user = new User(userData.firstName, userData.lastName, userData.zipCode);
+    console.log(this.user);
   }
 }

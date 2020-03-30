@@ -1,4 +1,36 @@
-<ion-toolbar color="secondary">
-  <ion-title>Welcome {{user.firstName}}</ion-title>
-</ion-toolbar>
-<ion-content [fullscreen]="true"></ion-content>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>CV-19 Item Finder</ion-title>
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Welcome {{user?.firstName}} {{user?.lastName?.charAt(0)}}.
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div>Recent Activities</div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <div class="flex-container">
+    <ion-fab-button color="primary"[routerLink]="['/item']">
+      <ion-icon name="create-sharp"></ion-icon>
+    </ion-fab-button>
+  </div>
+</ion-footer>

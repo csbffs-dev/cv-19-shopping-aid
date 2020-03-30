@@ -1,3 +1,5 @@
+@import "../theme/variables.scss";
+
 #container {
     text-align: center;
     position: absolute;
@@ -88,7 +90,9 @@
               transform: scale3D(0, 0, 1);
     } 
   }
-  
-  ion-toolbar {
-    padding-top: 15px;
+
+  @media (prefers-color-scheme: dark) {
+    .splash {
+      background-color: #428cff;
+    }
   }

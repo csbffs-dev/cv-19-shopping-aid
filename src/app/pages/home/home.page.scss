@@ -1,1 +1,16 @@
 @import '../../../global.scss';
+
+ion-card{
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 200px);
+}
+
+.flex-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-end;
+}
