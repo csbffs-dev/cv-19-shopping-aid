@@ -1,17 +1,32 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '../models/store';
 import { Address } from '../models/address';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 // Service class for CV-19 Shopping Aid API Calls
 export class DataService {
-  readonly SERVER_URL= "http://localhost:8080/";
+  readonly SERVER_URL = 'api';
+  readonly GET_USER = '/user/query';
+  readonly NEW_USER = '/user/setup';
   storesData = new Subject<Store[]>();
   constructor(private http: HttpClient) { }
+
+  getUser(userId: string) {
+    const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
+    const data = { 'user_id': userId };
+    return this.http.post(this.SERVER_URL + this.GET_USER, data, config);
+  }
+
+  signUpNewUser(user: User) {
+    const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
+    const data = { 'first_name': user.firstName, 'last_name' : user.lastName, 'zip_code' : user.zipCode }
+    return this.http.post<any>(this.SERVER_URL + this.NEW_USER, data, config);
+  }
 
   getStores(storeName: string, zipCode: string): Subject<Store[]> {
     console.log('in data service: ')
