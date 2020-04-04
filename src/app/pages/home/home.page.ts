@@ -25,23 +25,22 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    // this.navEnd.subscribe(evt => {
-    //   console.log('Navigation Ended!');
-    //   this.setUser()
-    // });
+    this.navEnd.subscribe(evt => {
+      // this forces the method to be invoked
+      // on navigation back from user page
+      this.setUser();
+    });
+  }
+
+  setUser(): void  {
     Storage.get({key: 'user'}).then(val => {
       if(val.value){
-        this.setUser(val.value);
+        const userData = JSON.parse(val.value);
+        this.user = new User(userData.firstName, userData.lastName, userData.zipCode);
       } else {
         console.log('First login.  Redirecting to user page');
         this.router.navigate(['/user']);
       }
     });
-  }
-
-  setUser(userValue): void  {
-    const userData = JSON.parse(userValue);
-    this.user = new User(userData.firstName, userData.lastName, userData.zipCode);
-    console.log(this.user);
   }
 }

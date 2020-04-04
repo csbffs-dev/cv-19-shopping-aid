@@ -1,9 +1,9 @@
 export class User {
     private _firstName: string;
     private _lastName: string;
-    private _zipCode: number;
+    private _zipCode: string;
     
-    constructor(firstName?: string, lastName?: string, zipCode?: number){
+    constructor(firstName?: string, lastName?: string, zipCode?: string){
         this._firstName = firstName;
         this._lastName = lastName;
         this._zipCode = zipCode;
@@ -29,7 +29,7 @@ export class User {
         return this._zipCode;
     }
 
-    set zipCode(zipCode: number) {
+    set zipCode(zipCode: string) {
         this._zipCode = zipCode;
     }
 

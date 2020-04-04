@@ -14,7 +14,7 @@ export class StorePage implements OnInit {
   public readonly ZIP_CODE_REGEX = '^[0-9]{5}(?:-[0-9]{4})?$';
 
   public storeName = "";
-  public storeZipCode = "";
+  public storeCity = "";
   public stores: Store[] = [];
 
   constructor(
@@ -26,7 +26,7 @@ export class StorePage implements OnInit {
   }
 
   checkZipCodePopOver(ev: any) {
-    if(!this.storeZipCode.match(this.ZIP_CODE_REGEX)) {
+    if(!this.storeCity.match(this.ZIP_CODE_REGEX)) {
       return this.presentPopover(ev);
     } else {
       this.populateStoreList();
@@ -47,9 +47,9 @@ export class StorePage implements OnInit {
   }
 
   populateStoreList(): void {
-    console.log(this.storeZipCode.match(this.ZIP_CODE_REGEX)[0].length > 0)
-    if(this.storeName.length > 0 && this.storeZipCode.match(this.ZIP_CODE_REGEX)[0].length > 0) {
-      this.dataService.getStores(this.storeName, this.storeZipCode).subscribe((stores: Store[]) =>{
+    console.log(this.storeCity.match(this.ZIP_CODE_REGEX)[0].length > 0)
+    if(this.storeName.length > 0 && this.storeCity.match(this.ZIP_CODE_REGEX)[0].length > 0) {
+      this.dataService.getStores(this.storeName, this.storeCity).subscribe((stores: Store[]) =>{
         console.log(stores);
         this.stores.concat(stores);
       });

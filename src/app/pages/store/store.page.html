@@ -13,9 +13,10 @@
       <ion-label position="floating">Store Name</ion-label>
       <ion-input placeholder="e.g. Costco" [(ngModel)]="storeName"></ion-input>
     </ion-item>
+    <br>
     <ion-item>
-      <ion-label position="floating">Zipcode</ion-label>
-      <ion-input placeholder="Zip Code" [(ngModel)]="storeZipCode" (ionBlur)="checkZipCodePopOver($event)"></ion-input>
+      <ion-label position="floating">City</ion-label>
+      <ion-input placeholder="City" [(ngModel)]="storeCity" (ionBlur)="checkZipCodePopOver($event)"></ion-input>
     </ion-item>
 
     <ion-card-content>

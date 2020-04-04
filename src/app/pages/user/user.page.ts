@@ -3,6 +3,7 @@ import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 import { DataService } from 'src/app/services/data.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const { Storage } = Plugins;
 
@@ -14,13 +15,22 @@ const { Storage } = Plugins;
 export class UserPage implements OnInit {
   public user: User;
 
-  constructor(private router: Router, private dataService: DataService) { }
+  constructor(
+    private router: Router,
+    private dataService: DataService,
+    private spinner: NgxSpinnerService,
+  ) { }
 
   ngOnInit() {
     this.user = new User();
     Storage.get({key: 'user'}).then(val => {
       if(val.value){
-        this.setUser(val.value);
+        this.spinner.show();
+        const userData = JSON.parse(val.value);
+        this.dataService.getUser(userData.userId).subscribe(res =>{
+          this.user = new User(userData.firstName, userData.lastName, userData.zipCode);
+          this.spinner.hide();
+        })
       }
     });
   }
@@ -41,10 +51,4 @@ export class UserPage implements OnInit {
       console.error(err);
     });
   }
-
-  private setUser(userValue): void  {
-    const userData = JSON.parse(userValue);
-    this.user = new User(userData.firstName, userData.lastName, userData.zipCode);
-  }
-
 }
