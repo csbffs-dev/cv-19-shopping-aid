@@ -20,10 +20,10 @@ To run this ionic app on mobile device emulator of choice.
 
 Note: iOS app requires XCode and android requires Android SDK.
 ```bash
-ionic capacitor run [platform]
+ionic capacitor run [platform] [option: i.e. --prod]
 ```
 
 ## Building
 ```bash
-ionic build
+ionic build [option: i.e. --prod]
 ```
