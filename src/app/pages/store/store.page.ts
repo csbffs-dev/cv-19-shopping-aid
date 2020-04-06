@@ -49,10 +49,11 @@ export class StorePage implements OnInit {
   populateStoreList(): void {
     console.log(this.storeCity.match(this.ZIP_CODE_REGEX)[0].length > 0)
     if(this.storeName.length > 0 && this.storeCity.match(this.ZIP_CODE_REGEX)[0].length > 0) {
-      this.dataService.getStores(this.storeName, this.storeCity).subscribe((stores: Store[]) =>{
-        console.log(stores);
-        this.stores.concat(stores);
-      });
+      // TODO: add endpoint to get store list
+      // this.dataService.getStores(this.storeName, this.storeCity).subscribe((stores: Store[]) =>{
+      //   console.log(stores);
+      //   this.stores.concat(stores);
+      // });
     }
     console.log(this.stores);
   }

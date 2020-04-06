@@ -2,7 +2,6 @@ import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { Store } from '../models/store';
-import { Address } from '../models/address';
 import { User } from '../models/user';
 import { SERVER_URL } from '../../environments/environment';
 
@@ -15,6 +14,7 @@ export class DataService {
   readonly GET_USER = '/user/query';
   readonly NEW_USER = '/user/setup';
   readonly EDIT_USER = '/user/edit';
+  readonly ADD_STORE = '/store/add';
   storesData = new Subject<Store[]>();
   constructor(private http: HttpClient) { 
     this.serverUrl = isDevMode()? 'api': SERVER_URL;
@@ -43,9 +43,9 @@ export class DataService {
     return this.http.post<any>(this.serverUrl + this.EDIT_USER, data, config);
   }
 
-  getStores(storeName: string, zipCode: string): Subject<Store[]> {
-    console.log('in data service: ')
-    this.storesData.next([new Store('269cf858-8f14-4022-99c6-a9ca8e4f57a1', 'Whole Foods Market', new Address('2210 Westlake Ave', 'Seattle', 'WA', 98121))]);
-    return this.storesData;
+  addStore(store: Store, userId: string) {
+    const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
+    const data = { 'user_id': userId, 'name': store.name, 'address': store.address.addressText };
+    return this.http.post(this.serverUrl + this.ADD_STORE, data, config);
   }
 }

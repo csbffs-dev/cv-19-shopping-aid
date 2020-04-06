@@ -1,10 +1,13 @@
+import { stringify } from 'querystring';
+
 export class Address {
+    public readonly ZIP_CODE_REGEX = '^[0-9]{5}(?:-[0-9]{4})?$';
     private _street: string;
     private _city: string;
     private _state: string;
-    private _zipCode: number;
+    private _zipCode: string;
     
-    constructor(street?: string, city?: string, state?:string, zipCode?: number){
+    constructor(street?: string, city?: string, state?:string, zipCode?: string){
         this._street = street;
         this._city = city;
         this._state = state;
@@ -35,11 +38,21 @@ export class Address {
         this._state = state;
     }
 
-    get zipCode(): number {
+    get zipCode(): string {
         return this._zipCode;
     }
 
-    set zipCode(zipCode: number) {
-        this._zipCode;
+    set zipCode(zipCode: string) {
+        this._zipCode = zipCode;
+    }
+
+    public isDefined(): boolean {
+        return this._street != undefined &&
+        this._city != undefined && this._state != undefined &&
+        this.zipCode != undefined;
+    }
+
+    get addressText(): string {
+        return this._street + ' ' + this._city + ', ' + this._state + ', ' + this._zipCode;
     }
 }

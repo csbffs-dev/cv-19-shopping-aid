@@ -5,7 +5,7 @@ export class Store {
     private _name: string;
     private _address: Address;
     
-    constructor(storeId?: string, name?: string, address?: Address){
+    constructor(name?: string, address?: Address, storeId?: string){
         this._storeId = storeId;
         this._name = name;
         this._address = address;
@@ -33,5 +33,9 @@ export class Store {
 
     set address(address: Address) {
         this._address = address;
+    }
+
+    public isDefined(): boolean {
+        return this._name != undefined && this._address.isDefined();
     }
 }

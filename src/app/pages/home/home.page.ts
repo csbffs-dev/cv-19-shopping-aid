@@ -36,7 +36,7 @@ export class HomePage implements OnInit {
     Storage.get({key: 'user'}).then(val => {
       if(val.value){
         const userData = JSON.parse(val.value);
-        this.user = new User(userData.firstName, userData.lastName, userData.zipCode);
+        this.user = new User(userData.firstName, userData.lastName, userData.zipCode, userData.userId);
       } else {
         console.log('First login.  Redirecting to user page');
         this.router.navigate(['/user']);
