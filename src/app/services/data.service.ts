@@ -14,6 +14,7 @@ export class DataService {
   private serverUrl: string;
   readonly GET_USER = '/user/query';
   readonly NEW_USER = '/user/setup';
+  readonly EDIT_USER = '/user/edit';
   storesData = new Subject<Store[]>();
   constructor(private http: HttpClient) { 
     this.serverUrl = isDevMode()? 'api': SERVER_URL;
@@ -34,6 +35,12 @@ export class DataService {
     const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
     const data = { 'first_name': user.firstName, 'last_name' : user.lastName, 'zip_code' : user.zipCode }
     return this.http.post<any>(this.serverUrl + this.NEW_USER, data, config);
+  }
+
+  updateUserInfo(user: User) {
+    const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
+    const data = { 'user_id': user.userId, 'first_name': user.firstName, 'last_name' : user.lastName, 'zip_code' : user.zipCode }
+    return this.http.post<any>(this.serverUrl + this.EDIT_USER, data, config);
   }
 
   getStores(storeName: string, zipCode: string): Subject<Store[]> {

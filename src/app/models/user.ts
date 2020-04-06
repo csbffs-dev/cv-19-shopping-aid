@@ -2,11 +2,13 @@ export class User {
     private _firstName: string;
     private _lastName: string;
     private _zipCode: string;
+    private _userId: string;
     
-    constructor(firstName?: string, lastName?: string, zipCode?: string){
+    constructor(firstName?: string, lastName?: string, zipCode?: string, userId?: string){
         this._firstName = firstName;
         this._lastName = lastName;
         this._zipCode = zipCode;
+        this._userId = userId;
     }
 
     get firstName() {
@@ -37,7 +39,17 @@ export class User {
         return this._firstName + ' ' + this._lastName;
     }
 
+    get userId() {
+        return this._userId;
+    }
+
+    set userId(userId: string) {
+        this._userId = userId;
+    }
+
     isDefined(): boolean {
-        return this._firstName != undefined && this._lastName != undefined && this._zipCode != undefined;
+        return this._firstName != undefined && 
+        this._lastName != undefined &&
+        this._zipCode != undefined;
     }
  }

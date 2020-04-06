@@ -14,6 +14,7 @@ const { Storage } = Plugins;
 })
 export class UserPage implements OnInit {
   public user: User;
+  public userExists: boolean = false;
 
   constructor(
     private router: Router,
@@ -28,7 +29,8 @@ export class UserPage implements OnInit {
         this.spinner.show();
         const userData = JSON.parse(val.value);
         this.dataService.getUser(userData.userId).subscribe(res =>{
-          this.user = new User(userData.firstName, userData.lastName, userData.zipCode);
+          this.user = new User(userData.firstName, userData.lastName, userData.zipCode, userData.userId);
+          this.userExists = true;
           this.spinner.hide();
         })
       }
@@ -36,19 +38,29 @@ export class UserPage implements OnInit {
   }
 
   public submitSignUp() {
-    this.dataService.signUpNewUser(this.user).subscribe(response => {
-      Storage.set({
-        key: 'user',
-        value: JSON.stringify({
-          'firstName': this.user.firstName,
-          'lastName': this.user.lastName,
-          'zipCode': this.user.zipCode,
-          'userId': response.user_id
-        })
-      });
-      this.router.navigate(['/home']);
-    }, err => {
-      console.error(err);
+    if(!this.userExists) {
+      this.dataService.signUpNewUser(this.user).subscribe(response => {
+        this.user.userId = response.user_id;
+        this.setUserToLocalStorage(this.user);
+        this.router.navigate(['/home']);
+      }, err => { console.error(err); });
+    } else {
+      this.dataService.updateUserInfo(this.user).subscribe(response => {
+        this.setUserToLocalStorage(this.user);
+        this.router.navigate(['/home']);
+      }, err => { console.error(err); });
+    }
+  }
+
+  private setUserToLocalStorage(userData: User): void {
+    Storage.set({
+      key: 'user',
+      value: JSON.stringify({
+        'firstName': userData.firstName,
+        'lastName': userData.lastName,
+        'zipCode': userData.zipCode,
+        'userId': userData.userId
+      })
     });
   }
 }
