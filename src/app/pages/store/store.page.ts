@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from 'src/app/models/store';
 import { DataService } from 'src/app/services/data.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
 import { PopoverComponent } from 'src/app/components/popover/popover.component';
 
@@ -20,17 +20,11 @@ export class StorePage implements OnInit {
   constructor(
     private dataService: DataService,
     private router: Router,
+    private route: ActivatedRoute,
     public popoverController: PopoverController) { }
 
   ngOnInit() {
-  }
-
-  checkZipCodePopOver(ev: any) {
-    if(!this.storeCity.match(this.ZIP_CODE_REGEX)) {
-      return this.presentPopover(ev);
-    } else {
-      this.populateStoreList();
-    }
+    this.populateStoreList(this.route.snapshot.paramMap.get('userId'));
   }
 
   async presentPopover(ev: any) {
@@ -46,20 +40,20 @@ export class StorePage implements OnInit {
     return await popover.present();
   }
 
-  populateStoreList(): void {
-    console.log(this.storeCity.match(this.ZIP_CODE_REGEX)[0].length > 0)
-    if(this.storeName.length > 0 && this.storeCity.match(this.ZIP_CODE_REGEX)[0].length > 0) {
-      // TODO: add endpoint to get store list
-      // this.dataService.getStores(this.storeName, this.storeCity).subscribe((stores: Store[]) =>{
-      //   console.log(stores);
-      //   this.stores.concat(stores);
-      // });
-    }
-    console.log(this.stores);
+  populateStoreList(userId: string): void {
+    this.dataService.getStores(userId).subscribe((res: Store[]) => {
+      res.forEach(store => this.stores.push(store));
+    }, err => {
+      console.error(err);
+    });
   }
 
   onStoreSelected(selectedStore: Store) {
-    this.router.navigate(['/item'], { state: { data: selectedStore } });
+    const data = { 
+      storeName: selectedStore.name,
+      storeAddress: selectedStore.address,
+      storeId: selectedStore.storeId }
+    this.router.navigate(['/item', data]);
   }
 
 }

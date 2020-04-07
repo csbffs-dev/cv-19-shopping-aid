@@ -25,7 +25,7 @@
     <br>
     <ion-item>
       <ion-label position="floating">Street Address</ion-label>
-      <ion-input placeholder="123 Abc Rd. #1" [(ngModel)]="store.address.street"
+      <ion-input placeholder="123 Abc Rd. #1" [(ngModel)]="store.street"
       [ngModelOptions]="{standalone: true}"></ion-input>
     </ion-item>
     <br>
@@ -34,13 +34,13 @@
         <ion-row>
           <ion-col size="9">
             <ion-label position="floating">City</ion-label>
-            <ion-input placeholder="Seattle" [(ngModel)]="store.address.city"
+            <ion-input placeholder="Seattle" [(ngModel)]="store.city"
               [ngModelOptions]="{standalone: true}"></ion-input>
           </ion-col>
           <ion-col size="3">
             <ion-label position="floating">State</ion-label>
             <ion-select [interfaceOptions]="selectOptions" interface="action-sheet" placeholder="WA"
-              [(ngModel)]="store.address.state" [ngModelOptions]="{standalone: true}">
+              [(ngModel)]="store.state" [ngModelOptions]="{standalone: true}">
               <ion-select-option value="state" *ngFor="let state of states">{{state}}</ion-select-option>
             </ion-select>
           </ion-col>
@@ -50,7 +50,7 @@
     <br>
     <ion-item>
       <ion-label position="floating">Zip Code</ion-label>
-      <ion-input placeholder="12345" [(ngModel)]="store.address.zipCode" [ngModelOptions]="{standalone: true}"></ion-input>
+      <ion-input placeholder="12345" [(ngModel)]="store.zipCode" [ngModelOptions]="{standalone: true}"></ion-input>
     </ion-item>
     <br>
   </ion-content>

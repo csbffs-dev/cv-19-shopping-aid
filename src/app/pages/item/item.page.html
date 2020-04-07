@@ -10,6 +10,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-label position="floating">Store Selected:</ion-label>
+  <br>
+  <div>
+    <p>{{selectedStore.name}}</p>
+    <p>{{selectedStore.address}}</p>
+  </div>
+  <br>
+  <ion-label position="floating">Item Info:</ion-label>
+  <br>
+  <p>Coming soon</p>
 </ion-content>

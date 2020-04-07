@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from 'src/app/models/store';
 import { DataService } from 'src/app/services/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Address } from 'src/app/models/address';
 
 @Component({
   selector: 'app-new-store',
@@ -26,7 +25,6 @@ export class NewStorePage implements OnInit {
 
   ngOnInit() {
     this.store = new Store();
-    this.store.address = new Address();
     this.states = ['TX','WA'];
   }
 

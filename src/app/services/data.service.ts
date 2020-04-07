@@ -1,6 +1,6 @@
 import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { Store } from '../models/store';
 import { User } from '../models/user';
 import { SERVER_URL } from '../../environments/environment';
@@ -15,6 +15,7 @@ export class DataService {
   readonly NEW_USER = '/user/setup';
   readonly EDIT_USER = '/user/edit';
   readonly ADD_STORE = '/store/add';
+  readonly GET_STORES = '/store/query';
   storesData = new Subject<Store[]>();
   constructor(private http: HttpClient) { 
     this.serverUrl = isDevMode()? 'api': SERVER_URL;
@@ -45,7 +46,12 @@ export class DataService {
 
   addStore(store: Store, userId: string) {
     const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
-    const data = { 'user_id': userId, 'name': store.name, 'address': store.address.addressText };
+    const data = { 'user_id': userId, 'name': store.name, 'address': store.addressText };
     return this.http.post(this.serverUrl + this.ADD_STORE, data, config);
+  }
+
+  getStores(userId: string): Observable<Store[]> {
+    const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
+    return this.http.post<Store[]>(this.serverUrl + this.GET_STORES, { 'user_id': userId }, config);
   }
 }
