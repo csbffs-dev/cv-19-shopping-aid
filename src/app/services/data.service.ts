@@ -16,9 +16,9 @@ export class DataService {
   readonly EDIT_USER = '/user/edit';
   readonly ADD_STORE = '/store/add';
   storesData = new Subject<Store[]>();
-  constructor(private http: HttpClient) { 
-    this.serverUrl = isDevMode()? 'api': SERVER_URL;
-    if(!isDevMode()) {
+  constructor(private http: HttpClient) {
+    this.serverUrl = SERVER_URL;
+    if (!isDevMode()) {
       console.log('not in dev mode');
     } else {
       console.log('in dev mode');
@@ -33,13 +33,13 @@ export class DataService {
 
   signUpNewUser(user: User) {
     const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
-    const data = { 'first_name': user.firstName, 'last_name' : user.lastName, 'zip_code' : user.zipCode }
+    const data = { 'first_name': user.firstName, 'last_name': user.lastName, 'zip_code': user.zipCode }
     return this.http.post<any>(this.serverUrl + this.NEW_USER, data, config);
   }
 
   updateUserInfo(user: User) {
     const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
-    const data = { 'user_id': user.userId, 'first_name': user.firstName, 'last_name' : user.lastName, 'zip_code' : user.zipCode }
+    const data = { 'user_id': user.userId, 'first_name': user.firstName, 'last_name': user.lastName, 'zip_code': user.zipCode }
     return this.http.post<any>(this.serverUrl + this.EDIT_USER, data, config);
   }
 
