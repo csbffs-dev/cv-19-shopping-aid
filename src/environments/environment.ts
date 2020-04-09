@@ -15,4 +15,4 @@ export const environment = {
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 
-export const SERVER_URL = 'http://localost:8080';
+export const SERVER_URL = 'http://localhost:8080';
