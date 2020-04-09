@@ -96,12 +96,6 @@ export class Store {
     }
 
     public isDefined(): boolean {
-        return this._name != undefined && this.isAddressDefined();
-    }
-
-    private isAddressDefined(): boolean {
-        return this._street != undefined &&
-        this._city != undefined && this._state != undefined &&
-        this.zipCode != undefined;
+        return this._name != undefined && this._address != undefined ;
     }
 }

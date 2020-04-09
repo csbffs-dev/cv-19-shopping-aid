@@ -46,7 +46,7 @@ export class DataService {
 
   addStore(store: Store, userId: string) {
     const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
-    const data = { 'user_id': userId, 'name': store.name, 'address': store.addressText };
+    const data = { 'user_id': userId, 'name': store.name, 'address': store.address };
     return this.http.post(this.serverUrl + this.ADD_STORE, data, config);
   }
 

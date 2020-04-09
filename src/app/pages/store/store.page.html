@@ -11,12 +11,16 @@
   <br>
   <ion-item>
     <ion-label position="floating">Store Name</ion-label>
-    <ion-input placeholder="e.g. Costco" [(ngModel)]="storeName"></ion-input>
+    <ion-input placeholder="e.g. Costco" [(ngModel)]="storeName" 
+    (keyup)="filterStoresByName()"
+    (input)="clearWhenEmpty()"></ion-input>
   </ion-item>
   <br>
   <ion-item>
     <ion-label position="floating">City</ion-label>
-    <ion-input placeholder="City" [(ngModel)]="storeCity"></ion-input>
+    <ion-input placeholder="City" [(ngModel)]="storeCity"
+    (keyup)="filterStoresByCity()"
+    (input)="clearWhenEmpty()"></ion-input>
   </ion-item>
   <ion-card>
     <br>
@@ -25,7 +29,7 @@
     </ion-label>
     <br>
     <ion-list>
-      <ion-item *ngFor="let store of stores" (click)="onStoreSelected(store)">
+      <ion-item *ngFor="let store of filteredStores" (click)="onStoreSelected(store)">
         <div>
           <p>{{store.name}}</p><p>{{store.address}}</p>
         </div>

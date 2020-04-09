@@ -15,7 +15,8 @@ export class StorePage implements OnInit {
 
   public storeName = "";
   public storeCity = "";
-  public stores: Store[] = [];
+  private stores: Store[];
+  public filteredStores: Store[];
 
   constructor(
     private dataService: DataService,
@@ -24,6 +25,7 @@ export class StorePage implements OnInit {
     public popoverController: PopoverController) { }
 
   ngOnInit() {
+    this.filteredStores = [];
     this.populateStoreList(this.route.snapshot.paramMap.get('userId'));
   }
 
@@ -42,10 +44,30 @@ export class StorePage implements OnInit {
 
   populateStoreList(userId: string): void {
     this.dataService.getStores(userId).subscribe((res: Store[]) => {
-      res.forEach(store => this.stores.push(store));
+      this.stores = res;
     }, err => {
       console.error(err);
     });
+  }
+
+  filterStoresByName() {
+    this.filteredStores = this.stores.filter(
+      store => store.name.toLowerCase().indexOf(this.storeName.toLowerCase()) > -1
+    );
+  }
+
+  filterStoresByCity() {
+    this.filteredStores = this.stores.filter(
+      store =>
+      store.city.toLowerCase().indexOf(this.storeCity.toLowerCase()) > -1 &&
+      store.name.toLowerCase().indexOf(this.storeName.toLowerCase()) > -1
+    );
+  }
+
+  clearWhenEmpty() {
+    if(this.storeName === "" && this.storeCity === "") {
+      this.filteredStores = [];
+    }
   }
 
   onStoreSelected(selectedStore: Store) {
