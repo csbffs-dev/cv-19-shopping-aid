@@ -9,17 +9,35 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true">
-  <br>
-  <ion-label position="floating">Store Selected:</ion-label>
-  <br>
-  <div>
-    <p>{{selectedStore.name}}</p>
-    <p>{{selectedStore.address}}</p>
-  </div>
-  <br>
-  <ion-label position="floating">Item Info:</ion-label>
-  <br>
-  <p>Coming soon</p>
+  <ion-item>
+    <div>
+      <br>
+      <ion-label>
+        <strong>Selected Store:</strong>
+      </ion-label>
+      <p>{{selectedStore.name}}</p>
+      <p>{{selectedStore.address}}</p>
+    </div>
+  </ion-item>
+  <ion-card>
+    <ion-card-content>
+      <ion-label>
+        <strong>Items to Report:</strong>
+      </ion-label>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+<ion-footer>
+  <ion-buttons class="flex-container">
+    <ion-fab-button size="small" color="success">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button size="small" color="danger">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button size="small" color="primary">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-buttons>
+</ion-footer>
