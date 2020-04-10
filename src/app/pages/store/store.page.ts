@@ -52,7 +52,8 @@ export class StorePage implements OnInit {
 
   filterStoresByName() {
     this.filteredStores = this.stores.filter(
-      store => store.name.toLowerCase().indexOf(this.storeName.toLowerCase()) > -1
+      store => store.name.toLowerCase().indexOf(this.storeName.toLowerCase()) > -1 &&
+      this.storeName !== ""
     );
   }
 
@@ -60,14 +61,9 @@ export class StorePage implements OnInit {
     this.filteredStores = this.stores.filter(
       store =>
       store.city.toLowerCase().indexOf(this.storeCity.toLowerCase()) > -1 &&
-      store.name.toLowerCase().indexOf(this.storeName.toLowerCase()) > -1
+      store.name.toLowerCase().indexOf(this.storeName.toLowerCase()) > -1 &&
+      this.storeCity !== ""
     );
-  }
-
-  clearWhenEmpty() {
-    if(this.storeName === "" && this.storeCity === "") {
-      this.filteredStores = [];
-    }
   }
 
   onStoreSelected(selectedStore: Store) {
