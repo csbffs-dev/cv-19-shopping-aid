@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PopoverComponent } from './components/popover/popover.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
   ],
   imports: [
     BrowserModule, 
+    FormsModule,
     IonicModule.forRoot({
       scrollPadding: false,
       scrollAssist: false

@@ -1,4 +1,9 @@
-.popover {
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+ion-input {
     text-align: center;
-    background-color: transparent;
 }

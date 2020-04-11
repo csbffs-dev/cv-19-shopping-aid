@@ -5,7 +5,7 @@
       <ion-back-button defaultHref="store"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="primary">
-      <ion-button type="submit" [disabled]="true">Report</ion-button>
+      <ion-button type="submit" [disabled]="reportedItems.length < 1">Report</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -13,9 +13,6 @@
   <ion-item>
     <div>
       <br>
-      <ion-label>
-        <strong>Selected Store:</strong>
-      </ion-label>
       <p>{{selectedStore.name}}</p>
       <p>{{selectedStore.address}}</p>
     </div>
@@ -25,15 +22,22 @@
       <ion-label>
         <strong>Items to Report:</strong>
       </ion-label>
+      <br>
+      <p>
+        <ion-chip [color]="item.type === INSTOCK_ITEM_TYPE ? 'success' : 'danger'"*ngFor="let item of reportedItems;">
+          <ion-label [color]="item.type === INSTOCK_ITEM_TYPE ? 'success' : 'danger'">{{item.name}}</ion-label>
+          <ion-icon (click)="removeItem(item)" [color]="item.type === INSTOCK_ITEM_TYPE ? 'success' : 'danger'" name="close-circle"></ion-icon>
+        </ion-chip>
+      </p>
     </ion-card-content>
   </ion-card>
 </ion-content>
 <ion-footer>
   <ion-buttons class="flex-container">
-    <ion-fab-button size="small" color="success">
+    <ion-fab-button size="small" color="success" (click)="presentPopover($event, INSTOCK_ITEM_TYPE)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-    <ion-fab-button size="small" color="danger">
+    <ion-fab-button size="small" color="danger" (click)="presentPopover($event, OUTSTOCK_ITEM_TYPE)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-button size="small" color="primary">

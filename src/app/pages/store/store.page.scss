@@ -2,6 +2,7 @@
 
 ion-card {
     height: calc(100vh - 300px);
+    overflow-y: auto;
 }
 
 .store-list-label {

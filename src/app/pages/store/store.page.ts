@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from 'src/app/models/store';
 import { DataService } from 'src/app/services/data.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PopoverController } from '@ionic/angular';
-import { PopoverComponent } from 'src/app/components/popover/popover.component';
 
 @Component({
   selector: 'app-store',
@@ -21,26 +19,13 @@ export class StorePage implements OnInit {
   constructor(
     private dataService: DataService,
     private router: Router,
-    private route: ActivatedRoute,
-    public popoverController: PopoverController) { }
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.filteredStores = [];
     this.populateStoreList(this.route.snapshot.paramMap.get('userId'));
   }
 
-  async presentPopover(ev: any) {
-    const popover = await this.popoverController.create({
-      component: PopoverComponent,
-      event: ev,
-      mode: 'ios',
-      animated: true,
-      showBackdrop: true,
-      cssClass: '--background-color: black;',
-      componentProps: { data: 'Invalid Zip Code Entered.'}
-    });
-    return await popover.present();
-  }
 
   populateStoreList(userId: string): void {
     this.dataService.getStores(userId).subscribe((res: Store[]) => {

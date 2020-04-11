@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, NavParams } from '@ionic/angular';
+import { ReportedItem } from 'src/app/models/reported-item';
 
 @Component({
   selector: 'app-popover',
@@ -8,15 +9,22 @@ import { PopoverController, NavParams } from '@ionic/angular';
 })
 export class PopoverComponent implements OnInit {
 
-  public message: string;
+  public item: ReportedItem;
 
   constructor(
     private navParams: NavParams,
-    private popoverController: PopoverController
+    private popoverCtrl: PopoverController
   ) { }
 
   ngOnInit() {
-    this.message = this.navParams.get<string>('data');
+    this.item = new ReportedItem();
+    this.item.type = this.navParams.get<string>('type');
+  }
+
+  onKeydown(event: any) {
+    if (event.key === "Enter") {
+      this.popoverCtrl.dismiss(this.item);
+    }
   }
 
 }
