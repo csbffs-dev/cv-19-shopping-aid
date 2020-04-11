@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from 'src/app/models/store';
 import { DataService } from 'src/app/services/data.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NewStorePage } from '../new-store/new-store.page';
+import { ModalController, ToastController } from '@ionic/angular';
+import { CloneVisitor } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
   selector: 'app-store',
@@ -14,18 +17,22 @@ export class StorePage implements OnInit {
   public storeName = "";
   public storeCity = "";
   private stores: Store[];
+  private userId: string;
   public filteredStores: Store[];
+  public isInitialState = true;
 
   constructor(
     private dataService: DataService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private modalCtrl: ModalController,
+    private toastController: ToastController) { }
 
   ngOnInit() {
     this.filteredStores = [];
-    this.populateStoreList(this.route.snapshot.paramMap.get('userId'));
+    this.userId = this.route.snapshot.paramMap.get('userId')
+    this.populateStoreList(this.userId);
   }
-
 
   populateStoreList(userId: string): void {
     this.dataService.getStores(userId).subscribe((res: Store[]) => {
@@ -35,13 +42,6 @@ export class StorePage implements OnInit {
     });
   }
 
-  filterStoresByName() {
-    this.filteredStores = this.stores.filter(
-      store => store.name.toLowerCase().indexOf(this.storeName.toLowerCase()) > -1 &&
-      this.storeName !== ""
-    );
-  }
-
   filterStoresByCity() {
     this.filteredStores = this.stores.filter(
       store =>
@@ -49,6 +49,9 @@ export class StorePage implements OnInit {
       store.name.toLowerCase().indexOf(this.storeName.toLowerCase()) > -1 &&
       this.storeCity !== ""
     );
+    if(this.isInitialState){
+      this.isInitialState = false;
+    }
   }
 
   onStoreSelected(selectedStore: Store) {
@@ -59,4 +62,39 @@ export class StorePage implements OnInit {
     this.router.navigate(['/item', data]);
   }
 
+  async showAddStoreModal() {
+    const modal = await this.modalCtrl.create({
+      component: NewStorePage,
+      swipeToClose: true,
+      presentingElement: await this.modalCtrl.getTop(), // Get the top-most ion-modal
+      componentProps: {
+        'userId': this.route.snapshot.paramMap.get('userId'),
+      }
+    });
+
+    modal.onDidDismiss().then(modalData => {
+      if(modalData.data) {
+        // returned storeId from modal, left here in case of future usage
+        // const storeId = modalData.data;
+        this.presentToast('New store has been added.', '');
+        this.populateStoreList(this.userId);
+        setTimeout(() => {
+          this.filterStoresByCity();
+        }, 500);
+      } else {
+        this.presentToast('No store added.', 'danger');
+      }
+    });
+
+    return await modal.present();
+  }
+
+  async presentToast(message: string, color: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      color: color,
+      duration: 2000
+    });
+    toast.present();
+  }
 }

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Store } from 'src/app/models/store';
 import { DataService } from 'src/app/services/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavParams, ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-new-store',
@@ -16,22 +17,28 @@ export class NewStorePage implements OnInit {
 
   public states: string[];
   public store: Store;
+  @Input() private userId: string;
 
   constructor(
     private dataService: DataService,
-    private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private navParams: NavParams,
+    private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {
     this.store = new Store();
-    this.states = ['TX','WA'];
+    console.log(this.userId);
   }
 
   addStore(): void {
-    const userId = this.route.snapshot.paramMap.get('userId');
-    this.dataService.addStore(this.store, userId).subscribe(response => {
-      this.router.navigate(['/home']);
+    const userId = this.navParams.get('userId');
+    this.dataService.addStore(this.store, userId).subscribe(storeId => {
+      this.modalCtrl.dismiss(storeId);
     });
+  }
+
+  closePage() {
+    this.modalCtrl.dismiss();
   }
 }

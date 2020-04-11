@@ -4,6 +4,11 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="showAddStoreModal()">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -11,8 +16,7 @@
   <br>
   <ion-item>
     <ion-label position="floating">Store Name</ion-label>
-    <ion-input placeholder="e.g. Costco" [(ngModel)]="storeName" 
-    (keyup)="filterStoresByName()"></ion-input>
+    <ion-input placeholder="e.g. Costco" [(ngModel)]="storeName"></ion-input>
   </ion-item>
   <br>
   <ion-item>
@@ -26,6 +30,10 @@
       <strong>Closest Stores</strong>
     </ion-label>
     <br>
+    <div *ngIf="filteredStores.length < 1 && !isInitialState">
+      <br>
+      <p class="default-message">Couldn't find your store?<br>Click "+" to add a new store</p>
+    </div>
     <ion-list>
       <ion-item *ngFor="let store of filteredStores" (click)="onStoreSelected(store)">
         <div>

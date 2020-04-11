@@ -8,6 +8,7 @@ import { SERVER_URL } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
+
 // Service class for CV-19 Shopping Aid API Calls
 export class DataService {
   private serverUrl: string;
@@ -17,13 +18,9 @@ export class DataService {
   readonly ADD_STORE = '/store/add';
   readonly GET_STORES = '/store/query';
   storesData = new Subject<Store[]>();
+
   constructor(private http: HttpClient) {
     this.serverUrl = SERVER_URL;
-    if (!isDevMode()) {
-      console.log('not in dev mode');
-    } else {
-      console.log('in dev mode');
-    }
   }
 
   getUser(userId: string) {

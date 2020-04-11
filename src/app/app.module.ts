@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PopoverComponent } from './components/popover/popover.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { FormsModule } from '@angular/forms';
+import { NewStorePageModule } from './pages/new-store/new-store.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     HttpClientModule,
     NgxSpinnerModule,
+    NewStorePageModule,
     IonicStorageModule.forRoot()
   ],
   providers: [
