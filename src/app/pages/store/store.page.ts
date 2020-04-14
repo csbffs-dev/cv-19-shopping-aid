@@ -58,7 +58,9 @@ export class StorePage implements OnInit {
     const data = { 
       storeName: selectedStore.name,
       storeAddress: selectedStore.address,
-      storeId: selectedStore.storeId }
+      storeId: selectedStore.storeId,
+      userId: this.userId
+    }
     this.router.navigate(['/item', data]);
   }
 

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from 'src/app/models/store';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PopoverComponent } from 'src/app/components/popover/popover.component';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ToastController } from '@ionic/angular';
 import { ReportedItem } from 'src/app/models/reported-item';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-item',
@@ -17,14 +18,20 @@ export class ItemPage implements OnInit {
   public selectedStore: Store;
   public reportedItems: ReportedItem[];
   
+  private userId: string;
+  
   constructor(private route: ActivatedRoute,
-    public popoverController: PopoverController) { }
+    private router: Router,
+    public popoverController: PopoverController,
+    public toastController: ToastController,
+    private dataService: DataService) { }
 
   ngOnInit() {
     this.selectedStore = new Store();
     this.selectedStore.name = this.route.snapshot.paramMap.get('storeName'); 
     this.selectedStore.address = this.route.snapshot.paramMap.get('storeAddress'); 
     this.selectedStore.storeId = this.route.snapshot.paramMap.get('storeId');
+    this.userId = this.route.snapshot.paramMap.get('userId');
     this.reportedItems = [];
   }
 
@@ -53,5 +60,35 @@ export class ItemPage implements OnInit {
     if (index > -1) {
       this.reportedItems.splice(index, 1);
     }
+  }
+
+  reportItems() {
+    const instockItems: string[] = [];
+    const outstockItems: string[] = [];
+    this.reportedItems.forEach(item => {
+      if(item.type === this.INSTOCK_ITEM_TYPE) {
+        instockItems.push(item.name);
+      } else {
+        // out stock case
+        outstockItems.push(item.name);
+      }
+    });
+    this.dataService.reportItems(this.userId, this.selectedStore.storeId, instockItems, outstockItems)
+    .subscribe(_ => {
+      this.presentToast(`${instockItems.length} in-stock and ${outstockItems.length} out-stock items added.`, 'success');
+      this.router.navigate(['/home']);
+    }, err => {
+      this.presentToast('Failed to add items.  Please make sure valid items entered.', 'danger');
+      console.error(err);
+    });
+  }
+
+  async presentToast(message: string, color: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      color: color,
+      duration: 2000
+    });
+    toast.present();
   }
 }

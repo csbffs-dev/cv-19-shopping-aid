@@ -5,7 +5,9 @@
       <ion-back-button defaultHref="store"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="primary">
-      <ion-button type="submit" [disabled]="reportedItems.length < 1">Report</ion-button>
+      <ion-button type="submit" [disabled]="reportedItems.length < 1" (click)="reportItems()">
+        Report
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

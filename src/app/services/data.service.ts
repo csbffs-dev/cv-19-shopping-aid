@@ -17,6 +17,10 @@ export class DataService {
   readonly EDIT_USER = '/user/edit';
   readonly ADD_STORE = '/store/add';
   readonly GET_STORES = '/store/query';
+  readonly REPORT_ITEMS = '/report/upload';
+
+  private readonly REQ_HEADER = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
+  
   storesData = new Subject<Store[]>();
 
   constructor(private http: HttpClient) {
@@ -24,31 +28,36 @@ export class DataService {
   }
 
   getUser(userId: string) {
-    const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
     const data = { 'user_id': userId };
-    return this.http.post(this.serverUrl + this.GET_USER, data, config);
+    return this.http.post(this.serverUrl + this.GET_USER, data, this.REQ_HEADER);
   }
 
   signUpNewUser(user: User) {
-    const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
     const data = { 'first_name': user.firstName, 'last_name': user.lastName, 'zip_code': user.zipCode }
-    return this.http.post<any>(this.serverUrl + this.NEW_USER, data, config);
+    return this.http.post<any>(this.serverUrl + this.NEW_USER, data, this.REQ_HEADER);
   }
 
   updateUserInfo(user: User) {
-    const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
     const data = { 'user_id': user.userId, 'first_name': user.firstName, 'last_name': user.lastName, 'zip_code': user.zipCode }
-    return this.http.post<any>(this.serverUrl + this.EDIT_USER, data, config);
+    return this.http.post<any>(this.serverUrl + this.EDIT_USER, data, this.REQ_HEADER);
   }
 
   addStore(store: Store, userId: string) {
-    const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
     const data = { 'user_id': userId, 'name': store.name, 'address': store.address };
-    return this.http.post(this.serverUrl + this.ADD_STORE, data, config);
+    return this.http.post(this.serverUrl + this.ADD_STORE, data, this.REQ_HEADER);
   }
 
   getStores(userId: string): Observable<Store[]> {
-    const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
-    return this.http.post<Store[]>(this.serverUrl + this.GET_STORES, { 'user_id': userId }, config);
+    return this.http.post<Store[]>(this.serverUrl + this.GET_STORES, { 'user_id': userId }, this.REQ_HEADER);
+  }
+
+  reportItems(userId: string, storeId: string, instockItems: string[], outstockItems: string[]) {
+    const data = {
+      "user_id": userId,
+      "store_id" : storeId,
+      "in_stock_items": instockItems,
+      "out_stock_items": outstockItems
+    }
+    return this.http.post(this.serverUrl + this.REPORT_ITEMS, data, this.REQ_HEADER);
   }
 }
