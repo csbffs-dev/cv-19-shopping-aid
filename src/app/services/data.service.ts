@@ -4,6 +4,7 @@ import { Subject, Observable } from 'rxjs';
 import { Store } from '../models/store';
 import { User } from '../models/user';
 import { SERVER_URL } from '../../environments/environment';
+import { ItemTokens } from '../models/item-tokens';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +19,12 @@ export class DataService {
   readonly ADD_STORE = '/store/add';
   readonly GET_STORES = '/store/query';
   readonly REPORT_ITEMS = '/report/upload';
+  readonly GET_ITEM_TOKENS = '/item/tokens/query'
 
   private readonly REQ_HEADER = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
-  
+
+  public itemTokens: ItemTokens[] = [];
+
   storesData = new Subject<Store[]>();
 
   constructor(private http: HttpClient) {
@@ -54,10 +58,24 @@ export class DataService {
   reportItems(userId: string, storeId: string, instockItems: string[], outstockItems: string[]) {
     const data = {
       "user_id": userId,
-      "store_id" : storeId,
+      "store_id": storeId,
       "in_stock_items": instockItems,
       "out_stock_items": outstockItems
     }
     return this.http.post(this.serverUrl + this.REPORT_ITEMS, data, this.REQ_HEADER);
+  }
+
+  loadItemTokens(userId: string) {
+    if (!(Array.isArray(this.itemTokens) && this.itemTokens.length)) {
+      const data = { 'userID': userId };
+      this.http.post(this.serverUrl + this.GET_ITEM_TOKENS, data, this.REQ_HEADER).subscribe((response: ItemTokens[]) => {
+        this.itemTokens = response;
+        console.log("Loaded %d items and their tokens.", this.itemTokens.length);
+      }, err => {
+        console.error(err);
+      });
+    } else {
+      console.log("Items already loaded");
+    }
   }
 }

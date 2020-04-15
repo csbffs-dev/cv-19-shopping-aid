@@ -17,9 +17,9 @@ export class ItemPage implements OnInit {
 
   public selectedStore: Store;
   public reportedItems: ReportedItem[];
-  
+
   private userId: string;
-  
+
   constructor(private route: ActivatedRoute,
     private router: Router,
     public popoverController: PopoverController,
@@ -28,8 +28,8 @@ export class ItemPage implements OnInit {
 
   ngOnInit() {
     this.selectedStore = new Store();
-    this.selectedStore.name = this.route.snapshot.paramMap.get('storeName'); 
-    this.selectedStore.address = this.route.snapshot.paramMap.get('storeAddress'); 
+    this.selectedStore.name = this.route.snapshot.paramMap.get('storeName');
+    this.selectedStore.address = this.route.snapshot.paramMap.get('storeAddress');
     this.selectedStore.storeId = this.route.snapshot.paramMap.get('storeId');
     this.userId = this.route.snapshot.paramMap.get('userId');
     this.reportedItems = [];
@@ -46,7 +46,7 @@ export class ItemPage implements OnInit {
     });
 
     popover.onDidDismiss().then(addedItem => {
-      if(addedItem.data) {
+      if (addedItem.data) {
         const item: ReportedItem = addedItem.data;
         this.reportedItems.push(item);
       }
@@ -66,7 +66,7 @@ export class ItemPage implements OnInit {
     const instockItems: string[] = [];
     const outstockItems: string[] = [];
     this.reportedItems.forEach(item => {
-      if(item.type === this.INSTOCK_ITEM_TYPE) {
+      if (item.type === this.INSTOCK_ITEM_TYPE) {
         instockItems.push(item.name);
       } else {
         // out stock case
@@ -74,13 +74,13 @@ export class ItemPage implements OnInit {
       }
     });
     this.dataService.reportItems(this.userId, this.selectedStore.storeId, instockItems, outstockItems)
-    .subscribe(_ => {
-      this.presentToast(`${instockItems.length} in-stock and ${outstockItems.length} out-stock items added.`, 'success');
-      this.router.navigate(['/home']);
-    }, err => {
-      this.presentToast('Failed to add items.  Please make sure valid items entered.', 'danger');
-      console.error(err);
-    });
+      .subscribe(_ => {
+        this.presentToast(`${instockItems.length} in-stock and ${outstockItems.length} out-stock items added.`, 'success');
+        this.router.navigate(['/home']);
+      }, err => {
+        this.presentToast('Failed to add items.  Please make sure valid items entered.', 'danger');
+        console.error(err);
+      });
   }
 
   async presentToast(message: string, color: string) {

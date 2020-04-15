@@ -4,6 +4,7 @@ import { User } from 'src/app/models/user';
 import { Plugins } from '@capacitor/core';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { DataService } from 'src/app/services/data.service';
 
 const { Storage } = Plugins;
 
@@ -15,8 +16,9 @@ const { Storage } = Plugins;
 export class HomePage implements OnInit {
 
   private navEnd: Observable<NavigationEnd>;
-  public user = new User();   
+  public user = new User();
   constructor(
+    private dataService: DataService,
     private router: Router
   ) {
     this.navEnd = router.events.pipe(
@@ -32,11 +34,12 @@ export class HomePage implements OnInit {
     });
   }
 
-  setUser(): void  {
-    Storage.get({key: 'user'}).then(val => {
-      if(val.value){
+  setUser(): void {
+    Storage.get({ key: 'user' }).then(val => {
+      if (val.value) {
         const userData = JSON.parse(val.value);
         this.user = new User(userData.firstName, userData.lastName, userData.zipCode, userData.userId);
+        this.dataService.loadItemTokens(this.user.userId);
       } else {
         console.log('First login.  Redirecting to user page');
         this.router.navigate(['/user']);
