@@ -1,15 +1,15 @@
 <form (ngSubmit)="submitSignUp()">
   <ion-header>
-    <ion-toolbar *ngIf="userExists; else signUpBlock"  color="primary">
+    <ion-toolbar *ngIf="userExists; else signUpBlock" color="primary">
       <ion-buttons slot="start">
-        <ion-button type="submit" [disabled]="!user.isDefined()">
-          edit
+        <ion-button [routerLink]="['/home']">
+          <ion-icon slot="end" name="close"></ion-icon>
         </ion-button>
       </ion-buttons>
       <ion-title>Edit Profile</ion-title>
       <ion-buttons slot="primary">
-        <ion-button [routerLink]="['/home']">
-          <ion-icon slot="end" name="close"></ion-icon>
+        <ion-button type="submit" [disabled]="!user.isDefined()">
+          edit
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
@@ -28,12 +28,12 @@
     <br>
     <ion-item>
       <ion-label position="floating">First Name</ion-label>
-      <ion-input type="text" [(ngModel)]="user.firstName" name="firstName" placeholder="John"></ion-input>
+      <ion-input type="text" [(ngModel)]="user.firstName" name="firstName" placeholder="Tony"></ion-input>
     </ion-item>
     <br>
     <ion-item>
       <ion-label position="floating">Last Name</ion-label>
-      <ion-input type="text" [(ngModel)]="user.lastName" name="lastName"placeholder="Doe"></ion-input>
+      <ion-input type="text" [(ngModel)]="user.lastName" name="lastName" placeholder="Doe"></ion-input>
     </ion-item>
     <br>
     <ion-item>
@@ -41,6 +41,5 @@
       <ion-input type="text" [(ngModel)]="user.zipCode" name="zipCode" placeholder="12345"></ion-input>
     </ion-item>
     <br>
-    <ngx-spinner></ngx-spinner>
   </ion-content>
 </form>

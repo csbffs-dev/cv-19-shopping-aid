@@ -1,25 +1,19 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+
 import { UserPage } from './user.page';
-import { RouterModule } from '@angular/router';
-import { NgxSpinnerModule } from 'ngx-spinner';
+import { UserPageRoutingModule } from './user-routing.module'
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    NgxSpinnerModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: UserPage
-      }
-    ])
+    UserPageRoutingModule
   ],
   declarations: [UserPage],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  entryComponents: [UserPage],
 })
-export class UserPageModule {}
+export class UserPageModule { }
