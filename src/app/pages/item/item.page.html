@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Report New Item</ion-title>
+    <ion-title>Report store items</ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="store"></ion-back-button>
     </ion-buttons>
@@ -22,13 +22,16 @@
   <ion-card>
     <ion-card-content>
       <ion-label>
-        <strong>Items to Report:</strong>
+        <strong>Reported items</strong>
       </ion-label>
+      <ion-label color = 'success'>In stock (green)</ion-label>
+      <ion-label color = 'danger'>Out of stock (red)</ion-label>
       <br>
       <p>
-        <ion-chip [color]="item.type === INSTOCK_ITEM_TYPE ? 'success' : 'danger'"*ngFor="let item of reportedItems;">
+        <ion-chip [color]="item.type === INSTOCK_ITEM_TYPE ? 'success' : 'danger'" *ngFor="let item of reportedItems;">
           <ion-label [color]="item.type === INSTOCK_ITEM_TYPE ? 'success' : 'danger'">{{item.name}}</ion-label>
-          <ion-icon (click)="removeItem(item)" [color]="item.type === INSTOCK_ITEM_TYPE ? 'success' : 'danger'" name="close-circle"></ion-icon>
+          <ion-icon (click)="removeItem(item)" [color]="item.type === INSTOCK_ITEM_TYPE ? 'success' : 'danger'"
+            name="close-circle"></ion-icon>
         </ion-chip>
       </p>
     </ion-card-content>
@@ -36,14 +39,14 @@
 </ion-content>
 <ion-footer>
   <ion-buttons class="flex-container">
-    <ion-fab-button size="small" color="success" (click)="presentPopover($event, INSTOCK_ITEM_TYPE)">
+    <ion-fab-button size="large" color="success" (click)="presentPopover($event, INSTOCK_ITEM_TYPE)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-    <ion-fab-button size="small" color="danger" (click)="presentPopover($event, OUTSTOCK_ITEM_TYPE)">
+    <ion-fab-button size="large" color="danger" (click)="presentPopover($event, OUTSTOCK_ITEM_TYPE)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-    <ion-fab-button size="small" color="primary">
+    <!-- <ion-fab-button size="small" color="primary">
       <ion-icon name="camera"></ion-icon>
-    </ion-fab-button>
+    </ion-fab-button> -->
   </ion-buttons>
 </ion-footer>

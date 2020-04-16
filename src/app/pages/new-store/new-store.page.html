@@ -1,16 +1,15 @@
-
 <ion-header>
   <ion-header>
     <ion-toolbar color="primary">
-      <ion-buttons slot="start">
-        <ion-button [disabled]="!store.isDefined()" (click)="addStore()">
-          <ion-icon name="add"></ion-icon>
+      <ion-buttons slot="end">
+        <ion-button (click)="closePage()">
+          <ion-icon name="close"></ion-icon>
         </ion-button>
       </ion-buttons>
       <ion-title>Add New Store</ion-title>
       <ion-buttons slot="end">
-        <ion-button (click)="closePage()">
-          <ion-icon name="close"></ion-icon>
+        <ion-button [disabled]="!store.isDefined()" (click)="addStore()">
+          <ion-icon name="add"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
@@ -21,14 +20,13 @@
   <br>
   <ion-item>
     <ion-label position="floating">Store Name</ion-label>
-    <ion-input placeholder="e.g. Costco" [(ngModel)]="store.name"
-      [ngModelOptions]="{standalone: true}"></ion-input>
+    <ion-input placeholder="e.g. Costco" [(ngModel)]="store.name" [ngModelOptions]="{standalone: true}"></ion-input>
   </ion-item>
   <br>
   <ion-item>
     <ion-label position="floating">Street Address</ion-label>
     <ion-input placeholder="4401 4th Ave S, Seattle, WA, 98134" [(ngModel)]="store.address"
-    [ngModelOptions]="{standalone: true}"></ion-input>
+      [ngModelOptions]="{standalone: true}"></ion-input>
   </ion-item>
   <br>
 </ion-content>

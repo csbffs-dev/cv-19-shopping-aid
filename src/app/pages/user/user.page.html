@@ -2,9 +2,7 @@
   <ion-header>
     <ion-toolbar *ngIf="userExists; else signUpBlock" color="primary">
       <ion-buttons slot="start">
-        <ion-button [routerLink]="['/home']">
-          <ion-icon slot="end" name="close"></ion-icon>
-        </ion-button>
+        <ion-back-button defaultHref="home"></ion-back-button>
       </ion-buttons>
       <ion-title>Edit Profile</ion-title>
       <ion-buttons slot="primary">
@@ -28,7 +26,7 @@
     <br>
     <ion-item>
       <ion-label position="floating">First Name</ion-label>
-      <ion-input type="text" [(ngModel)]="user.firstName" name="firstName" placeholder="Tony"></ion-input>
+      <ion-input type="text" [(ngModel)]="user.firstName" name="firstName" placeholder="John"></ion-input>
     </ion-item>
     <br>
     <ion-item>
