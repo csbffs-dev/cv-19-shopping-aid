@@ -66,7 +66,7 @@ export class DataService {
   }
 
   loadItemTokens(userId: string) {
-    if (!(Array.isArray(this.itemTokens) && this.itemTokens.length)) {
+    if (this.itemTokens.length === 0) {
       const data = { 'userID': userId };
       this.http.post(this.serverUrl + this.GET_ITEM_TOKENS, data, this.REQ_HEADER).subscribe((response: ItemTokens[]) => {
         this.itemTokens = response;

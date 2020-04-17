@@ -1,8 +1,8 @@
 export class ItemTokens {
     private _name: string;
-    private _tokens: Array<string>;
+    private _tokens: string[];
 
-    constructor(name?: string, tokens?: Array<string>) {
+    constructor(name?: string, tokens?: string[]) {
         this._name = name;
         this._tokens = tokens;
     }
