@@ -1,10 +1,14 @@
+import { Injectable } from '@angular/core';
+@Injectable({
+    providedIn: 'root'
+})
 export class User {
     private _firstName: string;
     private _lastName: string;
     private _zipCode: string;
     private _userId: string;
-    
-    constructor(firstName?: string, lastName?: string, zipCode?: string, userId?: string){
+
+    constructor(firstName?: string, lastName?: string, zipCode?: string, userId?: string) {
         this._firstName = firstName;
         this._lastName = lastName;
         this._zipCode = zipCode;
@@ -48,8 +52,8 @@ export class User {
     }
 
     isDefined(): boolean {
-        return this._firstName != undefined && 
-        this._lastName != undefined &&
-        this._zipCode != undefined;
+        return this._firstName != undefined &&
+            this._lastName != undefined &&
+            this._zipCode != undefined;
     }
- }
+}

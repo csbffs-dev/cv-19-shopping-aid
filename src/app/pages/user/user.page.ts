@@ -3,7 +3,6 @@ import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 import { DataService } from 'src/app/services/data.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 const { Storage } = Plugins;
 
@@ -13,42 +12,40 @@ const { Storage } = Plugins;
   styleUrls: ['./user.page.scss'],
 })
 export class UserPage implements OnInit {
-  public user: User;
-  public userExists: boolean = false;
+  public user = new User();
+  userExists = false;
 
   constructor(
     private router: Router,
     private dataService: DataService,
-    private spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit() {
-    this.user = new User();
-    Storage.get({key: 'user'}).then(val => {
-      if(val.value){
-        this.spinner.show();
-        const userData = JSON.parse(val.value);
-        this.dataService.getUser(userData.userId).subscribe(res =>{
-          this.user = new User(userData.firstName, userData.lastName, userData.zipCode, userData.userId);
-          this.userExists = true;
-          this.spinner.hide();
-        })
+    Storage.get({key: 'user'}).then(res => {
+      if (res.value) {
+        const userData = JSON.parse(res.value);
+        this.user = new User(userData.firstName, userData.lastName, userData.zipCode, userData.userId);
+        this.userExists = true;
       }
     });
   }
 
   public submitSignUp() {
-    if(!this.userExists) {
-      this.dataService.signUpNewUser(this.user).subscribe(response => {
-        this.user.userId = response.user_id;
+    if (!this.userExists) {
+      this.dataService.signUpNewUser(this.user).subscribe(res => {
+        this.user.userId = res.user_id;
         this.setUserToLocalStorage(this.user);
         this.router.navigate(['/home']);
-      }, err => { console.error(err); });
+      }, err => {
+        console.error(err);
+      });
     } else {
-      this.dataService.updateUserInfo(this.user).subscribe(response => {
+      this.dataService.updateUserInfo(this.user).subscribe(res => {
         this.setUserToLocalStorage(this.user);
         this.router.navigate(['/home']);
-      }, err => { console.error(err); });
+      }, err => {
+        console.error(err);
+      });
     }
   }
 
