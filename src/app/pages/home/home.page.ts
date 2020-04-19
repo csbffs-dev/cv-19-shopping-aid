@@ -11,11 +11,11 @@ const { Storage } = Plugins;
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  public user = new User();
+  user: User; 
 
-  constructor(
-    public router: Router,
-  ) { }
+  constructor(private router: Router) {
+    this.user = new User();
+  }
 
   ionViewWillEnter() {
     Storage.get({ key: 'user' }).then(res => {

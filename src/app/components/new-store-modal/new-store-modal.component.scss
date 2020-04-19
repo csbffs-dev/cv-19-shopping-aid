@@ -1,0 +1,8 @@
+@import '../../../global.scss';
+ion-card {
+    height: calc(100vh - 300px);
+    overflow-y: auto;
+}
+.help-message {
+    text-align: center;
+}

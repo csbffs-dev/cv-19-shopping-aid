@@ -2,11 +2,11 @@
   <ion-header>
     <ion-toolbar color="primary">
       <ion-buttons slot="start">
-        <ion-button (click)="closePage()">
+        <ion-button (click)="close()">
           <ion-icon name="close"></ion-icon>
         </ion-button>
       </ion-buttons>
-      <ion-title>Add New Store</ion-title>
+      <ion-title>Add store</ion-title>
       <ion-buttons slot="end">
         <ion-button [disabled]="!store.isDefined()" (click)="addStore()">
           <ion-icon name="add"></ion-icon>
@@ -19,14 +19,17 @@
 <ion-content [fullscreen]="true">
   <br>
   <ion-item>
-    <ion-label position="floating">Store Name</ion-label>
-    <ion-input placeholder="e.g. Costco" [(ngModel)]="store.name" [ngModelOptions]="{standalone: true}"></ion-input>
+    <ion-label position="floating">Store name</ion-label>
+    <ion-input placeholder="Costco" [(ngModel)]="store.name" [ngModelOptions]="{standalone: true}"></ion-input>
   </ion-item>
   <br>
   <ion-item>
-    <ion-label position="floating">Street Address</ion-label>
-    <ion-input placeholder="4401 4th Ave S, Seattle, WA, 98134" [(ngModel)]="store.address"
+    <ion-label position="floating">Store address/neighborhood</ion-label>
+    <ion-input placeholder="8629 120th Ave NE, Kirkland, WA 98033" [(ngModel)]="store.address"
       [ngModelOptions]="{standalone: true}"></ion-input>
   </ion-item>
   <br>
+  <ion-card>
+    <p class="help-message">For best results, copy and paste the address from Google Maps.</p>
+  </ion-card>
 </ion-content>

@@ -27,11 +27,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/store/store.module').then(m => m.StorePageModule),
     canLoad: [CheckUser]
   },
-  {
-    path: 'new-store',
-    loadChildren: () => import('./pages/new-store/new-store.module').then(m => m.NewStorePageModule),
-    canLoad: [CheckUser]
-  },
 ];
 
 @NgModule({

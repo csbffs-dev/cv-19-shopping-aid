@@ -20,7 +20,7 @@ export class DataService {
   readonly REPORT_ITEMS = '/report/upload';
 
   private readonly REQ_HEADER = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
-  
+
   storesData = new Subject<Store[]>();
 
   constructor(private http: HttpClient) {
@@ -54,7 +54,7 @@ export class DataService {
   reportItems(userId: string, storeId: string, instockItems: string[], outstockItems: string[]) {
     const data = {
       "user_id": userId,
-      "store_id" : storeId,
+      "store_id": storeId,
       "in_stock_items": instockItems,
       "out_stock_items": outstockItems
     }

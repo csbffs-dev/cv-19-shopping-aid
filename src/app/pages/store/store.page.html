@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Report store items</ion-title>
+    <ion-title>Store lookup</ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
@@ -21,8 +21,7 @@
   <br>
   <ion-item>
     <ion-label position="floating">City</ion-label>
-    <ion-input placeholder="Kirkland" [(ngModel)]="storeCity"
-    (keyup)="filterStoresByCity()"></ion-input>
+    <ion-input placeholder="Kirkland" [(ngModel)]="storeCity" (keyup)="filterStoresByCity()"></ion-input>
   </ion-item>
   <ion-card>
     <br>
@@ -37,7 +36,8 @@
     <ion-list>
       <ion-item *ngFor="let store of filteredStores" (click)="onStoreSelected(store)">
         <div>
-          <p>{{store.name}}</p><p>{{store.address}}</p>
+          <p>{{store.name}}</p>
+          <p>{{store.address}}</p>
         </div>
         <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
       </ion-item>
