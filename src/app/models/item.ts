@@ -1,4 +1,9 @@
-export class ItemTokens {
+import { Injectable } from '@angular/core';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class Item {
     private _name: string;
     private _tokens: string[];
 
@@ -11,8 +16,15 @@ export class ItemTokens {
         return this._name;
     }
 
-    get tokens(): Array<string> {
+    get tokens(): string[] {
         return this._tokens;
     }
 
+    set name(name: string) {
+        this._name = name;
+    }
+
+    set tokens(tokens: string[]) {
+        this._tokens = tokens;
+    }
 }

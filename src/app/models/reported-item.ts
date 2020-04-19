@@ -1,12 +1,12 @@
 export class ReportedItem {
-    public static readonly INSTOCK_TYPE = "instock";
-    public static readonly OUTSTOCK_TYPE = "outstock";
+    public static readonly INSTOCK_TYPE = "in stock";
+    public static readonly OUTSTOCK_TYPE = "out of stock";
 
     private _name: string;
     private _type: string;
 
     constructor(name?: string, type?: string) {
-        if(type) {
+        if (type) {
             this.raiseErrorIfTypeInvalid(type);
         }
         this._name = name;
@@ -31,7 +31,7 @@ export class ReportedItem {
     }
 
     private raiseErrorIfTypeInvalid(type: string): void {
-        if(type !== ReportedItem.INSTOCK_TYPE && type !== ReportedItem.OUTSTOCK_TYPE) {
+        if (type !== ReportedItem.INSTOCK_TYPE && type !== ReportedItem.OUTSTOCK_TYPE) {
             throw Error("Invalid item type");
         }
     }

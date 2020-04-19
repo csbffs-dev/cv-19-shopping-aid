@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from 'src/app/models/store';
 import { DataService } from 'src/app/services/data.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NewStorePage } from '../new-store/new-store.page';
 import { ModalController, ToastController } from '@ionic/angular';
-import { CloneVisitor } from '@angular/compiler/src/i18n/i18n_ast';
+import { NewStoreModalComponent } from 'src/app/components/new-store-modal/new-store-modal.component';
 
 @Component({
   selector: 'app-store',
@@ -45,17 +44,17 @@ export class StorePage implements OnInit {
   filterStoresByCity() {
     this.filteredStores = this.stores.filter(
       store =>
-      store.city.toLowerCase().indexOf(this.storeCity.toLowerCase()) > -1 &&
-      store.name.toLowerCase().indexOf(this.storeName.toLowerCase()) > -1 &&
-      this.storeCity !== ""
+        store.city.toLowerCase().indexOf(this.storeCity.toLowerCase()) > -1 &&
+        store.name.toLowerCase().indexOf(this.storeName.toLowerCase()) > -1 &&
+        this.storeCity !== ""
     );
-    if(this.isInitialState){
+    if (this.isInitialState) {
       this.isInitialState = false;
     }
   }
 
   onStoreSelected(selectedStore: Store) {
-    const data = { 
+    const data = {
       storeName: selectedStore.name,
       storeAddress: selectedStore.address,
       storeId: selectedStore.storeId,
@@ -66,36 +65,32 @@ export class StorePage implements OnInit {
 
   async showAddStoreModal() {
     const modal = await this.modalCtrl.create({
-      component: NewStorePage,
-      swipeToClose: true,
-      presentingElement: await this.modalCtrl.getTop(), // Get the top-most ion-modal
+      component: NewStoreModalComponent,
       componentProps: {
-        'userId': this.route.snapshot.paramMap.get('userId'),
+        userId: this.userId
       }
     });
-
-    modal.onDidDismiss().then(modalData => {
-      if(modalData.data) {
-        // returned storeId from modal, left here in case of future usage
-        // const storeId = modalData.data;
-        this.presentToast('New store has been added.', '');
-        this.populateStoreList(this.userId);
-        setTimeout(() => {
-          this.filterStoresByCity();
-        }, 500);
-      } else {
-        this.presentToast('No store added.', 'danger');
+    await modal.present();
+    modal.onDidDismiss().then(res => {
+      if (res.data) {
+        if (res.data.error) {
+          this.presentToast(`Sorry! This couldn't be added.\nReason: ${res.data.error.error}`, 'danger');
+        } else {
+          this.presentToast(`You added ${res.data.storeName} (${res.data.storeAddress})!`, 'success');
+          this.populateStoreList(this.userId);
+          setTimeout(() => {
+            this.filterStoresByCity();
+          }, 500);
+        }
       }
     });
-
-    return await modal.present();
   }
 
   async presentToast(message: string, color: string) {
     const toast = await this.toastController.create({
       message: message,
       color: color,
-      duration: 2000
+      duration: color === 'danger' ? 10000 : 5000
     });
     toast.present();
   }

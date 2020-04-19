@@ -22,10 +22,12 @@
   <ion-card>
     <ion-card-content>
       <ion-label>
-        <strong>Reported items</strong>
+        <strong>Your reported items</strong>
       </ion-label>
-      <ion-label color = 'success'>In stock (green)</ion-label>
-      <ion-label color = 'danger'>Out of stock (red)</ion-label>
+      <p>
+        <ion-label color='success'>In stock (green)</ion-label>
+        <ion-label color='danger'>  Out of stock (red)</ion-label>
+      </p>
       <br>
       <p>
         <ion-chip [color]="item.type === INSTOCK_ITEM_TYPE ? 'success' : 'danger'" *ngFor="let item of reportedItems;">
@@ -39,14 +41,11 @@
 </ion-content>
 <ion-footer>
   <ion-buttons class="flex-container">
-    <ion-fab-button size="large" color="success" (click)="presentPopover($event, INSTOCK_ITEM_TYPE)">
+    <ion-fab-button size="large" color="success" (click)="showModal(this.INSTOCK_ITEM_TYPE)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-    <ion-fab-button size="large" color="danger" (click)="presentPopover($event, OUTSTOCK_ITEM_TYPE)">
+    <ion-fab-button size="large" color="danger" (click)="showModal(this.OUTSTOCK_ITEM_TYPE )">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-    <!-- <ion-fab-button size="small" color="primary">
-      <ion-icon name="camera"></ion-icon>
-    </ion-fab-button> -->
   </ion-buttons>
 </ion-footer>

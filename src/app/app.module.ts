@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
@@ -9,31 +9,30 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { PopoverComponent } from './components/popover/popover.component';
-import { NgxSpinnerModule } from "ngx-spinner";
 import { FormsModule } from '@angular/forms';
-import { NewStorePageModule } from './pages/new-store/new-store.module';
+import { ItemSearchModalComponent } from './components/item-search-modal/item-search-modal.component';
+import { NewStoreModalComponent } from './components/new-store-modal/new-store-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PopoverComponent
+    ItemSearchModalComponent,
+    NewStoreModalComponent
   ],
   entryComponents: [
-    PopoverComponent
+    ItemSearchModalComponent,
+    NewStoreModalComponent
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    AppRoutingModule,
     FormsModule,
     IonicModule.forRoot({
       scrollPadding: false,
       scrollAssist: false
     }),
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    NgxSpinnerModule,
-    NewStorePageModule,
     IonicStorageModule.forRoot()
   ],
   providers: [
@@ -42,6 +41,5 @@ import { NewStorePageModule } from './pages/new-store/new-store.module';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule {}
+export class AppModule { }

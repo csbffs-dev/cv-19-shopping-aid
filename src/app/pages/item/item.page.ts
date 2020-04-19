@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from 'src/app/models/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PopoverComponent } from 'src/app/components/popover/popover.component';
-import { PopoverController, ToastController } from '@ionic/angular';
+import { ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ReportedItem } from 'src/app/models/reported-item';
 import { DataService } from 'src/app/services/data.service';
+import { ItemService } from 'src/app/services/item.service';
+import { ItemSearchModalComponent } from 'src/app/components/item-search-modal/item-search-modal.component';
 
 @Component({
   selector: 'app-item',
@@ -22,9 +24,10 @@ export class ItemPage implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    public popoverController: PopoverController,
-    public toastController: ToastController,
-    private dataService: DataService) { }
+    private modalCtrl: ModalController,
+    private toastCtrl: ToastController,
+    private dataService: DataService,
+    private itemService: ItemService) { }
 
   ngOnInit() {
     this.selectedStore = new Store();
@@ -33,30 +36,28 @@ export class ItemPage implements OnInit {
     this.selectedStore.storeId = this.route.snapshot.paramMap.get('storeId');
     this.userId = this.route.snapshot.paramMap.get('userId');
     this.reportedItems = [];
+    this.itemService.load(this.userId);
   }
 
-  async presentPopover(ev: any, itemType: string) {
-    const popover = await this.popoverController.create({
-      component: PopoverComponent,
-      event: ev,
-      mode: 'ios',
-      animated: true,
-      showBackdrop: true,
-      componentProps: { type: itemType }
-    });
-
-    popover.onDidDismiss().then(addedItem => {
-      if (addedItem.data) {
-        const item: ReportedItem = addedItem.data;
+  async showModal(state: string) {
+    const modal = await this.modalCtrl.create({
+      component: ItemSearchModalComponent,
+      componentProps: {
+        data: state
+      }
+    })
+    await modal.present();
+    modal.onDidDismiss().then(res => {
+      if (res.data) {
+        console.log('adding to report', res.data)
+        const item: ReportedItem = res.data;
         this.reportedItems.push(item);
       }
     });
-
-    return await popover.present();
   }
 
   removeItem(item: ReportedItem) {
-    const index = this.reportedItems.indexOf(item, 0);
+    const index = this.reportedItems.indexOf(item)
     if (index > -1) {
       this.reportedItems.splice(index, 1);
     }
@@ -69,25 +70,24 @@ export class ItemPage implements OnInit {
       if (item.type === this.INSTOCK_ITEM_TYPE) {
         instockItems.push(item.name);
       } else {
-        // out stock case
         outstockItems.push(item.name);
       }
     });
     this.dataService.reportItems(this.userId, this.selectedStore.storeId, instockItems, outstockItems)
       .subscribe(_ => {
-        this.presentToast(`${instockItems.length} in-stock and ${outstockItems.length} out-stock items added.`, 'success');
+        this.presentToast(`Thanks! You reported ${instockItems.length} in stock and ${outstockItems.length} out of stock item(s)!`, 'success');
         this.router.navigate(['/home']);
       }, err => {
-        this.presentToast('Failed to add items.  Please make sure valid items entered.', 'danger');
         console.error(err);
+        this.presentToast('Something went wrong! The items couldn\'t be reported. Please try again.', 'danger');
       });
   }
 
   async presentToast(message: string, color: string) {
-    const toast = await this.toastController.create({
+    const toast = await this.toastCtrl.create({
       message: message,
       color: color,
-      duration: 2000
+      duration: 5000
     });
     toast.present();
   }
