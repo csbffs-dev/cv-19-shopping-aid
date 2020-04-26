@@ -27,6 +27,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/store/store.module').then(m => m.StorePageModule),
     canLoad: [CheckUser]
   },
+  {
+    path: 'search',
+    loadChildren: () => import('./pages/search/search.module').then(m => m.SearchPageModule),
+    canLoad: [CheckUser]
+  },
 ];
 
 @NgModule({
