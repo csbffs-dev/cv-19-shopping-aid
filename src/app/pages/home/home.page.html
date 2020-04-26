@@ -7,7 +7,7 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button [routerLink]="['/search', { userId: user.userId }]">
         <ion-icon slot="icon-only" name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -29,7 +29,7 @@
 
 <ion-footer>
   <div class="flex-container">
-    <ion-fab-button color="primary"[routerLink]="['/store', { userId: user.userId }]">
+    <ion-fab-button color="primary" [routerLink]="['/store', { userId: user.userId }]">
       <ion-icon name="create-sharp"></ion-icon>
     </ion-fab-button>
   </div>

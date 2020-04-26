@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Search results</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+  <ion-card>
+    <div *ngIf="itemData.length < 1">
+      <br>
+      <p class="default-message">There hasn't been any reports<br>for {{query}}.</p>
+    </div>
+    <ion-list>
+      <ion-item-group *ngFor="let it of itemData">
+        <ion-item>
+          <ion-label>
+            <h3>{{it.storeName}}</h3>
+            <p>{{it.storeAddress}}</p>
+            <ion-text *ngIf="it.inStock === true" color="success">
+              <p>IN STOCK</p>
+            </ion-text>
+            <ion-text *ngIf="it.inStock !== true" color="danger">
+              <p>OUT OF STOCK</p>
+            </ion-text>
+            <p>Seen {{it.seenCount}}x</p>
+            <p *ngIf="it.hoursAgo < 24">Last seen {{it.hoursAgo}} hours ago</p>
+            <p *ngIf="it.hoursAgo >= 24">Last seen {{it.daysAgo}} days ago</p>
+          </ion-label>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+  </ion-card>
+</ion-content>

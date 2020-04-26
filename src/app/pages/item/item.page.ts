@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from 'src/app/models/store';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PopoverComponent } from 'src/app/components/popover/popover.component';
-import { ModalController, PopoverController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { ReportedItem } from 'src/app/models/reported-item';
 import { DataService } from 'src/app/services/data.service';
 import { ItemService } from 'src/app/services/item.service';
@@ -22,7 +21,8 @@ export class ItemPage implements OnInit {
 
   private userId: string;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
@@ -36,6 +36,7 @@ export class ItemPage implements OnInit {
     this.selectedStore.storeId = this.route.snapshot.paramMap.get('storeId');
     this.userId = this.route.snapshot.paramMap.get('userId');
     this.reportedItems = [];
+
     this.itemService.load(this.userId);
   }
 

@@ -1,0 +1,10 @@
+@import "../../../global.scss";
+
+ion-card {
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+.default-message {
+    text-align: center;
+}

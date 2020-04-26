@@ -12,16 +12,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ItemSearchModalComponent } from './components/item-search-modal/item-search-modal.component';
 import { NewStoreModalComponent } from './components/new-store-modal/new-store-modal.component';
+import { ItemDataModalComponent} from './components/item-data-modal/item-data-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ItemSearchModalComponent,
-    NewStoreModalComponent
+    NewStoreModalComponent,
+    ItemDataModalComponent
   ],
   entryComponents: [
     ItemSearchModalComponent,
-    NewStoreModalComponent
+    NewStoreModalComponent,
+    ItemDataModalComponent
   ],
   imports: [
     BrowserModule,
