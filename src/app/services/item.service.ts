@@ -8,7 +8,7 @@ import { Item } from '../models/item';
   providedIn: 'root'
 })
 export class ItemService {
-  data: Item[]
+  data: Item[];
   serverURL: string;
   private readonly GET_ITEM_TOKENS = '/item/tokens/query';
   private readonly REQ_HEADER = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
@@ -33,6 +33,12 @@ export class ItemService {
 
   filter(query: string): string[] {
     const limit = 10; // return the first 10 filtered items
+    // for a query split up by words, matched items must (1) contain all previous query words
+    // in their tokens and (2) must contain the last query word as a prefix of one token.
+    // e.g. query = `brown ri` so query words = [`brown`, `ri`].
+    // `brown rice` matches.
+    // `white rice` does not match. `brown` is not in [`white`, `rice`].
+    // `brown sugar` does not match. `ri` is not a prefix of ['brown`, `sugar`].
     let matchedItems = [] as string[];
     if (query.length) {
       const queryWords = query.toLowerCase().split(' ').filter(w => !!w.trim().length);
@@ -40,15 +46,15 @@ export class ItemService {
         for (let i = 0; i < queryWords.length - 1; i++) {
           let w = queryWords[i];
           if (item.tokens.indexOf(w) === -1) {
-            return true; 
+            return true; // skip if the previous query words are not tokens, 
           }
         }
-        let w = queryWords[queryWords.length-1]
+        let w = queryWords[queryWords.length - 1]
         let matched = false;
-        item.tokens.some((token: string) => { 
+        item.tokens.some((token: string) => {
           if (token.startsWith(w)) {
             matched = true;
-            return true;
+            return true; // if the last query word is a prefix of a token
           }
           return false;
         })

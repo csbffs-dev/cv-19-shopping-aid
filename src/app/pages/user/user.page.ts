@@ -40,7 +40,7 @@ export class UserPage implements OnInit {
         console.error(err);
       });
     } else {
-      this.dataService.updateUserInfo(this.user).subscribe(res => {
+      this.dataService.updateUserInfo(this.user).subscribe(_ => {
         this.setUserToLocalStorage(this.user);
         this.router.navigate(['/home']);
       }, err => {
