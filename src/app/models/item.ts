@@ -1,8 +1,3 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({
-    providedIn: 'root'
-})
 export class Item {
     private _name: string;
     private _tokens: string[];

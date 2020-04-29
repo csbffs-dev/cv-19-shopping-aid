@@ -1,27 +1,18 @@
-import { Injectable, isDevMode } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Subject, Observable } from 'rxjs';
-import { Store } from '../models/store';
 import { User } from '../models/user';
 import { SERVER_URL } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-
-// Service class for CV-19 Shopping Aid API Calls
 export class DataService {
   private serverUrl: string;
-  readonly GET_USER = '/user/query';
-  readonly NEW_USER = '/user/setup';
-  readonly EDIT_USER = '/user/edit';
-  readonly ADD_STORE = '/store/add';
-  readonly GET_STORES = '/store/query';
-  readonly REPORT_ITEMS = '/report/upload';
-
+  private readonly GET_USER = '/user/query';
+  private readonly NEW_USER = '/user/setup';
+  private readonly EDIT_USER = '/user/edit';
+  private readonly REPORT_ITEMS = '/report/upload';
   private readonly REQ_HEADER = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
-
-  storesData = new Subject<Store[]>();
 
   constructor(private http: HttpClient) {
     this.serverUrl = SERVER_URL;
@@ -40,15 +31,6 @@ export class DataService {
   updateUserInfo(user: User) {
     const data = { 'user_id': user.userId, 'first_name': user.firstName, 'last_name': user.lastName, 'zip_code': user.zipCode }
     return this.http.post<any>(this.serverUrl + this.EDIT_USER, data, this.REQ_HEADER);
-  }
-
-  addStore(store: Store, userId: string) {
-    const data = { 'user_id': userId, 'name': store.name, 'address': store.address };
-    return this.http.post(this.serverUrl + this.ADD_STORE, data, this.REQ_HEADER);
-  }
-
-  getStores(userId: string): Observable<Store[]> {
-    return this.http.post<Store[]>(this.serverUrl + this.GET_STORES, { 'user_id': userId }, this.REQ_HEADER);
   }
 
   reportItems(userId: string, storeId: string, instockItems: string[], outstockItems: string[]) {

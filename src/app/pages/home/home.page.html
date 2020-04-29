@@ -1,14 +1,16 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Grocery Item Finder</ion-title>
+    <ion-title>
+      Grocery Scout
+    </ion-title>
     <ion-buttons slot="start">
       <ion-button [routerLink]="['/user']">
         <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button [routerLink]="['/search', { userId: user.userId }]">
-        <ion-icon slot="icon-only" name="search"></ion-icon>
+    <ion-buttons slot="primary">
+      <ion-button [routerLink]="['/about']">
+        about
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -22,7 +24,12 @@
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <div>Recent Activities</div>
+      <div class=default-message>
+        <br>
+        <p>Found an item in-stock or out-of-stock?<br />Click the report icon to the left!</p>
+        <br>
+        <p>Looking for an item?<br />Click the search icon to the right!</p>
+      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>
@@ -31,6 +38,9 @@
   <div class="flex-container">
     <ion-fab-button color="primary" [routerLink]="['/store', { userId: user.userId }]">
       <ion-icon name="create-sharp"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="primary" [routerLink]="['/search', { userId: user.userId }]">
+      <ion-icon name="search"></ion-icon>
     </ion-fab-button>
   </div>
 </ion-footer>

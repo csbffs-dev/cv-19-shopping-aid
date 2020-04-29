@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from 'src/app/models/store';
-import { DataService } from 'src/app/services/data.service';
+import { StoreService } from 'src/app/services/store.service'
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { NewStoreModalComponent } from 'src/app/components/new-store-modal/new-store-modal.component';
@@ -11,45 +11,43 @@ import { NewStoreModalComponent } from 'src/app/components/new-store-modal/new-s
   styleUrls: ['./store.page.scss'],
 })
 export class StorePage implements OnInit {
-  public readonly ZIP_CODE_REGEX = '^[0-9]{5}(?:-[0-9]{4})?$';
-
+  private userId: string;
   public storeName = "";
   public storeCity = "";
-  private stores: Store[];
-  private userId: string;
+  public stores: Store[];
   public filteredStores: Store[];
   public isInitialState = true;
 
   constructor(
-    private dataService: DataService,
+    private storeService: StoreService,
     private router: Router,
     private route: ActivatedRoute,
     private modalCtrl: ModalController,
-    private toastController: ToastController) { }
+    private toastController: ToastController
+  ) { }
 
   ngOnInit() {
+    this.stores = [];
     this.filteredStores = [];
     this.userId = this.route.snapshot.paramMap.get('userId')
     this.populateStoreList(this.userId);
   }
 
   populateStoreList(userId: string): void {
-    this.dataService.getStores(userId).subscribe((res: Store[]) => {
+    this.storeService.getStores(userId).subscribe((res: Store[]) => {
       this.stores = res;
+      console.log("Loaded", this.stores.length, "stores.")
     }, err => {
       console.error(err);
     });
   }
 
-  filterStoresByCity() {
-    this.filteredStores = this.stores.filter(
-      store =>
-        store.city.toLowerCase().indexOf(this.storeCity.toLowerCase()) > -1 &&
-        store.name.toLowerCase().indexOf(this.storeName.toLowerCase()) > -1 &&
-        this.storeCity !== ""
-    );
-    if (this.isInitialState) {
+  filterStores() {
+    this.filteredStores = this.storeService.filter(this.stores, this.storeName, this.storeCity);
+    if (this.filteredStores.length === 0 && this.storeName.length > 0 && this.storeCity.length > 0) {
       this.isInitialState = false;
+    } else {
+      this.isInitialState = true;
     }
   }
 
@@ -79,7 +77,7 @@ export class StorePage implements OnInit {
           this.presentToast(`You added ${res.data.storeName} (${res.data.storeAddress})!`, 'success');
           this.populateStoreList(this.userId);
           setTimeout(() => {
-            this.filterStoresByCity();
+            this.filterStores();
           }, 500);
         }
       }
