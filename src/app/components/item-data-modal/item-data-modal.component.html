@@ -27,7 +27,8 @@
             <ion-text *ngIf="it.inStock !== true" color="danger">
               <p>OUT OF STOCK</p>
             </ion-text>
-            <p>Seen {{it.seenCount}}x</p>
+            <p *ngIf="it.seenCount === 1">Seen by 1 person</p>
+            <p *ngIf="it.seenCount > 1">Seen by {{it.seenCount}} people</p>
             <p *ngIf="it.hoursAgo < 24">Last seen {{it.hoursAgo}} hours ago</p>
             <p *ngIf="it.hoursAgo >= 24">Last seen {{it.daysAgo}} days ago</p>
           </ion-label>

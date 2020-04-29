@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Store } from 'src/app/models/store';
-import { DataService } from 'src/app/services/data.service';
+import { StoreService } from 'src/app/services/store.service';
+
 import { ModalController } from '@ionic/angular';
 
 
@@ -15,7 +16,7 @@ export class NewStoreModalComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
-    private dataService: DataService
+    private dataService: StoreService
   ) {
     this.store = new Store();
   }
@@ -25,10 +26,10 @@ export class NewStoreModalComponent implements OnInit {
   async addStore() {
     this.dataService.addStore(this.store, this.userId).subscribe(storeId => {
       console.log("User added a new store", storeId);
-      this.modalCtrl.dismiss({storeName: this.store.name, storeAddress: this.store.address});
+      this.modalCtrl.dismiss({ storeName: this.store.name, storeAddress: this.store.address });
     }, err => {
       console.log(err);
-      this.modalCtrl.dismiss({error: err});
+      this.modalCtrl.dismiss({ error: err });
     });
   }
 
