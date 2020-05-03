@@ -56,6 +56,7 @@
     ],
     "object-literal-sort-keys": false,
     "ordered-imports": false,
+    "object-shorthand": ["error", "always"],
     "quotemark": [
       true,
       "single"
@@ -83,6 +84,11 @@
       "app",
       "page",
       "kebab-case"
-    ]
+    ],
+    "variable-name": {
+      "options": [
+        "allow-leading-underscore"
+      ]
+    }
   }
 }

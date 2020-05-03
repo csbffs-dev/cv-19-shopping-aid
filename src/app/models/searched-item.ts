@@ -10,7 +10,7 @@ export class SearchedItem {
     constructor(daysAgo?: number, hoursAgo?: number, storeName?: string, storeAddress?: string, inStock?: boolean, seenCount?: number) {
         this._daysAgo = daysAgo;
         this._hoursAgo = hoursAgo;
-        this._storeName = storeName
+        this._storeName = storeName;
         this._storeAddress = storeAddress;
         this._inStock = inStock;
         this._seenCount = seenCount;

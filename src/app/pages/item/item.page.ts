@@ -46,11 +46,11 @@ export class ItemPage implements OnInit {
       componentProps: {
         data: state
       }
-    })
+    });
     await modal.present();
     modal.onDidDismiss().then(res => {
       if (res.data) {
-        console.log('adding to report', res.data)
+        console.log('adding to report', res.data);
         const item: ReportedItem = res.data;
         this.reportedItems.push(item);
       }
@@ -58,7 +58,7 @@ export class ItemPage implements OnInit {
   }
 
   removeItem(item: ReportedItem) {
-    const index = this.reportedItems.indexOf(item)
+    const index = this.reportedItems.indexOf(item);
     if (index > -1) {
       this.reportedItems.splice(index, 1);
     }
@@ -76,7 +76,9 @@ export class ItemPage implements OnInit {
     });
     this.dataService.reportItems(this.userId, this.selectedStore.storeId, instockItems, outstockItems)
       .subscribe(_ => {
-        this.presentToast(`Thanks! You reported ${instockItems.length} in stock and ${outstockItems.length} out of stock item(s)!`, 'success');
+        this.presentToast(
+          `Thanks! You reported ${instockItems.length} in stock and ${outstockItems.length} out of stock item(s)!`,
+          'success');
         this.router.navigate(['/home']);
       }, err => {
         console.error(err);
@@ -86,8 +88,8 @@ export class ItemPage implements OnInit {
 
   async presentToast(message: string, color: string) {
     const toast = await this.toastCtrl.create({
-      message: message,
-      color: color,
+      message,
+      color,
       duration: 5000
     });
     toast.present();

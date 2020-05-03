@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from 'src/app/models/store';
-import { StoreService } from 'src/app/services/store.service'
+import { StoreService } from 'src/app/services/store.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { NewStoreModalComponent } from 'src/app/components/new-store-modal/new-store-modal.component';
@@ -12,8 +12,8 @@ import { NewStoreModalComponent } from 'src/app/components/new-store-modal/new-s
 })
 export class StorePage implements OnInit {
   private userId: string;
-  public storeName = "";
-  public storeCity = "";
+  public storeName = '';
+  public storeCity = '';
   public stores: Store[];
   public filteredStores: Store[];
   public isInitialState = true;
@@ -29,14 +29,14 @@ export class StorePage implements OnInit {
   ngOnInit() {
     this.stores = [];
     this.filteredStores = [];
-    this.userId = this.route.snapshot.paramMap.get('userId')
+    this.userId = this.route.snapshot.paramMap.get('userId');
     this.populateStoreList(this.userId);
   }
 
   populateStoreList(userId: string): void {
     this.storeService.getStores(userId).subscribe((res: Store[]) => {
       this.stores = res;
-      console.log("Loaded", this.stores.length, "stores.")
+      console.log('Loaded', this.stores.length, 'stores.');
     }, err => {
       console.error(err);
     });
@@ -57,7 +57,7 @@ export class StorePage implements OnInit {
       storeAddress: selectedStore.address,
       storeId: selectedStore.storeId,
       userId: this.userId
-    }
+    };
     this.router.navigate(['/item', data]);
   }
 
@@ -86,8 +86,8 @@ export class StorePage implements OnInit {
 
   async presentToast(message: string, color: string) {
     const toast = await this.toastController.create({
-      message: message,
-      color: color,
+      message,
+      color,
       duration: color === 'danger' ? 10000 : 5000
     });
     toast.present();

@@ -16,7 +16,7 @@ export class ItemDataModalComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private searchService: SearchService
-  ) { 
+  ) {
     this.itemData = [];
   }
 

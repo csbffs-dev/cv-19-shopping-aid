@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { UserPage } from './user.page';
-import { UserPageRoutingModule } from './user-routing.module'
+import { UserPageRoutingModule } from './user-routing.module';
 
 @NgModule({
   imports: [

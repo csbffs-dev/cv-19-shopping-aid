@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular'
+import { ModalController } from '@ionic/angular';
 import { ItemService } from 'src/app/services/item.service';
 import { ItemDataModalComponent } from 'src/app/components/item-data-modal/item-data-modal.component';
 import { ActivatedRoute } from '@angular/router';

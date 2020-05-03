@@ -20,15 +20,15 @@ export class ItemService {
 
   load(userId: string) {
     if (this.data.length === 0) {
-      const data = { 'user_id': userId };
+      const data = { user_id: userId };
       this.http.post(this.serverURL + this.GET_ITEM_TOKENS, data, this.REQ_HEADER).subscribe((response: Item[]) => {
         this.data = response;
-        console.log("Loaded %d items", this.data.length);
+        console.log('Loaded %d items', this.data.length);
       }, err => {
         console.error(err);
-      })
+      });
     }
-    return of(this.data)
+    return of(this.data);
   }
 
   filter(query: string): string[] {
@@ -39,17 +39,17 @@ export class ItemService {
     // `brown rice` matches.
     // `white rice` does not match. `brown` is not in [`white`, `rice`].
     // `brown sugar` does not match. `ri` is not a prefix of ['brown`, `sugar`].
-    let matchedItems = [] as string[];
+    const matchedItems = [] as string[];
     if (query.length) {
       const queryWords = query.toLowerCase().split(' ').filter(w => !!w.trim().length);
       this.data.every((item: Item) => {
         for (let i = 0; i < queryWords.length - 1; i++) {
-          let w = queryWords[i];
-          if (item.tokens.indexOf(w) === -1) {
-            return true; // skip if the previous query words are not tokens, 
+          const word = queryWords[i];
+          if (item.tokens.indexOf(word) === -1) {
+            return true; // skip if the previous query words are not tokens,
           }
         }
-        let w = queryWords[queryWords.length - 1]
+        const w = queryWords[queryWords.length - 1];
         let matched = false;
         item.tokens.some((token: string) => {
           if (token.startsWith(w)) {
@@ -57,7 +57,7 @@ export class ItemService {
             return true; // if the last query word is a prefix of a token
           }
           return false;
-        })
+        });
         if (matched) {
           if (matchedItems.push(item.name) === limit) {
             return false; // terminate early
@@ -66,6 +66,6 @@ export class ItemService {
         return true;
       });
     }
-    return matchedItems
+    return matchedItems;
   }
 }

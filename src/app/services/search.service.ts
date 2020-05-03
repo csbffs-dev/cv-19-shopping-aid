@@ -15,6 +15,6 @@ export class SearchService {
   }
 
   getItemData(userId: string, itemNameQuery: string) {
-    return this.http.post(this.serverUrl + this.SEARCH_ITEM, { 'user_id': userId, 'item_name': itemNameQuery }, this.REQ_HEADER);
+    return this.http.post(this.serverUrl + this.SEARCH_ITEM, { user_id: userId, item_name: itemNameQuery }, this.REQ_HEADER);
   }
 }

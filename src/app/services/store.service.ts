@@ -18,12 +18,12 @@ export class StoreService {
   }
 
   addStore(store: Store, userId: string) {
-    const data = { 'user_id': userId, 'name': store.name, 'address': store.address };
+    const data = { user_id: userId, name: store.name, address: store.address };
     return this.http.post(this.serverUrl + this.ADD_STORE, data, this.REQ_HEADER);
   }
 
   getStores(userId: string): Observable<Store[]> {
-    return this.http.post<Store[]>(this.serverUrl + this.GET_STORES, { 'user_id': userId }, this.REQ_HEADER);
+    return this.http.post<Store[]>(this.serverUrl + this.GET_STORES, { user_id: userId }, this.REQ_HEADER);
   }
 
   filter(stores: Store[], storeNameQuery: string, storeCityQuery: string): Store[] {
@@ -34,6 +34,6 @@ export class StoreService {
     storeCityQuery = storeCityQuery.toLowerCase();
     return stores.filter((store: Store) => {
       return store.name.toLowerCase().startsWith(storeNameQuery) && store.city.toLowerCase().startsWith(storeCityQuery);
-    })
+    });
   }
 }

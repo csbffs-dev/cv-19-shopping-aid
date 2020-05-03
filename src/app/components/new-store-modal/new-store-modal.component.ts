@@ -25,7 +25,7 @@ export class NewStoreModalComponent implements OnInit {
 
   async addStore() {
     this.dataService.addStore(this.store, this.userId).subscribe(storeId => {
-      console.log("User added a new store", storeId);
+      console.log('User added a new store', storeId);
       this.modalCtrl.dismiss({ storeName: this.store.name, storeAddress: this.store.address });
     }, err => {
       console.log(err);
