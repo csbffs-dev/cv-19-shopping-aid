@@ -13,7 +13,7 @@ const { Storage } = Plugins;
 })
 export class UserPage implements OnInit {
   public user = new User();
-  userExists = false;
+  public userExists = false;
 
   constructor(
     private router: Router,
@@ -27,6 +27,9 @@ export class UserPage implements OnInit {
         const userData = JSON.parse(res.value);
         this.user = new User(userData.firstName, userData.lastName, userData.zipCode, userData.userId);
         this.userExists = true;
+        console.log('found user in storage');
+      } else {
+        console.log('no user in storage');
       }
     })();
   }
@@ -36,6 +39,7 @@ export class UserPage implements OnInit {
       this.dataService.signUpNewUser(this.user).subscribe(res => {
         this.user.userId = res.user_id;
         this.setUserToLocalStorage(this.user);
+        this.userExists = true;
         console.log('created a new user profile');
         this.router.navigate(['/home']);
       }, err => {
