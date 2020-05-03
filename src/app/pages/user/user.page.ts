@@ -21,13 +21,14 @@ export class UserPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    Storage.get({key: 'user'}).then(res => {
+    (async () => {
+      const res = await Storage.get({ key: 'user' });
       if (res.value) {
         const userData = JSON.parse(res.value);
         this.user = new User(userData.firstName, userData.lastName, userData.zipCode, userData.userId);
         this.userExists = true;
       }
-    });
+    })();
   }
 
   public submitSignUp() {
