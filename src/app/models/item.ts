@@ -11,12 +11,12 @@ export class Item {
         return this._name;
     }
 
-    get tokens(): string[] {
-        return this._tokens;
-    }
-
     set name(name: string) {
         this._name = name;
+    }
+
+    get tokens(): string[] {
+        return this._tokens;
     }
 
     set tokens(tokens: string[]) {

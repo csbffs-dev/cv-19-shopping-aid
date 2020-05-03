@@ -15,8 +15,7 @@ export class CheckUser implements CanLoad {
     const res = await Storage.get({ key: 'user' });
     if (res.value) {
       return true;
-    }
-    else {
+    } else {
       this.router.navigate(['/user']);
       return false;
     }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular'
+import { ModalController } from '@ionic/angular';
 import { ItemService } from 'src/app/services/item.service';
 import { ReportedItem } from 'src/app/models/reported-item';
 
@@ -24,11 +24,11 @@ export class ItemSearchModalComponent implements OnInit {
   ngOnInit() { }
 
   getItems(ev: { target: { value: string; }; }) {
-    this.items = this.itemService.filter(ev.target.value)
+    this.items = this.itemService.filter(ev.target.value);
   }
 
   async onItemSelected(selectedItem: string) {
-    let item = new ReportedItem()
+    const item = new ReportedItem();
     item.name = selectedItem;
     item.type = this.data;
     await this.modalCtrl.dismiss(item);

@@ -35,7 +35,7 @@ export class UserPage implements OnInit {
       this.dataService.signUpNewUser(this.user).subscribe(res => {
         this.user.userId = res.user_id;
         this.setUserToLocalStorage(this.user);
-        console.log("created a new user profile")
+        console.log('created a new user profile');
         this.router.navigate(['/home']);
       }, err => {
         console.error(err);
@@ -43,7 +43,7 @@ export class UserPage implements OnInit {
     } else {
       this.dataService.updateUserInfo(this.user).subscribe(_ => {
         this.setUserToLocalStorage(this.user);
-        console.log("updated user profile")
+        console.log('updated user profile');
         this.router.navigate(['/home']);
       }, err => {
         console.error(err);
@@ -55,10 +55,10 @@ export class UserPage implements OnInit {
     Storage.set({
       key: 'user',
       value: JSON.stringify({
-        'firstName': userData.firstName,
-        'lastName': userData.lastName,
-        'zipCode': userData.zipCode,
-        'userId': userData.userId
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        zipCode: userData.zipCode,
+        userId: userData.userId
       })
     });
   }

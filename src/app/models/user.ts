@@ -48,8 +48,8 @@ export class User {
     }
 
     isDefined(): boolean {
-        return this._firstName != undefined &&
-            this._lastName != undefined &&
-            this._zipCode != undefined;
+        return this._firstName !== undefined &&
+            this._lastName !== undefined &&
+            this._zipCode !== undefined;
     }
 }

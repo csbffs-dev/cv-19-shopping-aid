@@ -9,8 +9,8 @@ export class Store {
     private _latitude: number;
     private _longitude: number;
     private _address: string;
-    
-    constructor(name?: string, street?: string, city?: string, state?:string, zipCode?: string, storeId?: string){
+
+    constructor(name?: string, street?: string, city?: string, state?: string, zipCode?: string, storeId?: string) {
         this._storeId = storeId;
         this._name = name;
         this._street = street;
@@ -96,6 +96,6 @@ export class Store {
     }
 
     public isDefined(): boolean {
-        return this._name != undefined && this._address != undefined ;
+        return this._name !== undefined && this._address !== undefined ;
     }
 }

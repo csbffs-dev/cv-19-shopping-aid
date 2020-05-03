@@ -11,7 +11,7 @@ const { Storage } = Plugins;
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  user: User; 
+  user: User;
 
   constructor(private router: Router) {
     this.user = new User();
@@ -26,6 +26,6 @@ export class HomePage {
         console.log('First login.  Redirecting to user page');
         this.router.navigate(['/user']);
       }
-    })
+    });
   }
 }

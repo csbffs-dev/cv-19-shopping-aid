@@ -19,27 +19,27 @@ export class DataService {
   }
 
   getUser(userId: string) {
-    const data = { 'user_id': userId };
+    const data = { user_id: userId };
     return this.http.post(this.serverUrl + this.GET_USER, data, this.REQ_HEADER);
   }
 
   signUpNewUser(user: User) {
-    const data = { 'first_name': user.firstName, 'last_name': user.lastName, 'zip_code': user.zipCode }
+    const data = { first_name: user.firstName, last_name: user.lastName, zip_code: user.zipCode };
     return this.http.post<any>(this.serverUrl + this.NEW_USER, data, this.REQ_HEADER);
   }
 
   updateUserInfo(user: User) {
-    const data = { 'user_id': user.userId, 'first_name': user.firstName, 'last_name': user.lastName, 'zip_code': user.zipCode }
+    const data = { user_id: user.userId, first_name: user.firstName, last_name: user.lastName, zip_code: user.zipCode };
     return this.http.post<any>(this.serverUrl + this.EDIT_USER, data, this.REQ_HEADER);
   }
 
   reportItems(userId: string, storeId: string, instockItems: string[], outstockItems: string[]) {
     const data = {
-      "user_id": userId,
-      "store_id": storeId,
-      "in_stock_items": instockItems,
-      "out_stock_items": outstockItems
-    }
+      user_id: userId,
+      store_id: storeId,
+      in_stock_items: instockItems,
+      out_stock_items: outstockItems
+    };
     return this.http.post(this.serverUrl + this.REPORT_ITEMS, data, this.REQ_HEADER);
   }
 }

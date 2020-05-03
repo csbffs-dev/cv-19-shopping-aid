@@ -1,6 +1,6 @@
 export class ReportedItem {
-    public static readonly INSTOCK_TYPE = "in stock";
-    public static readonly OUTSTOCK_TYPE = "out of stock";
+    public static readonly INSTOCK_TYPE = 'in stock';
+    public static readonly OUTSTOCK_TYPE = 'out of stock';
 
     private _name: string;
     private _type: string;
@@ -32,7 +32,7 @@ export class ReportedItem {
 
     private raiseErrorIfTypeInvalid(type: string): void {
         if (type !== ReportedItem.INSTOCK_TYPE && type !== ReportedItem.OUTSTOCK_TYPE) {
-            throw Error("Invalid item type");
+            throw Error('Invalid item type');
         }
     }
 }
