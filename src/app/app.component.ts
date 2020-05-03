@@ -18,13 +18,14 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
   ) { }
-  
+
   ngOnInit() {
     this.initializeApp();
   }
 
   initializeApp() {
-    timer(3000).subscribe(() => {
+    // this.showLoadingScreen = false;
+    timer(1500).subscribe(() => {
       this.showLoadingScreen = false;
     });
     this.platform.ready().then(() => {
